@@ -1,0 +1,10 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://lq5mbilks88f"]
+
+[ext_resource type="Texture2D" uid="uid://cmw0n5fsomxvf" path="res://textures/fence.png" id="1_4whx1"]
+
+[resource]
+transparency = 2
+alpha_scissor_threshold = 0.467
+alpha_antialiasing_mode = 2
+alpha_antialiasing_edge = 0.2
+albedo_texture = ExtResource("1_4whx1")

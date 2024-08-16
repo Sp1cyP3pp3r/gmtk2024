@@ -1,0 +1,243 @@
+[gd_scene load_steps=24 format=3 uid="uid://c1n8xrti8afpc"]
+
+[ext_resource type="Script" path="res://objects/player/player.gd" id="1_oa43o"]
+[ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_p4q1k"]
+[ext_resource type="Script" path="res://objects/player/head.gd" id="3_kj3jh"]
+[ext_resource type="Script" path="res://objects/player/legs.gd" id="3_sof65"]
+[ext_resource type="Script" path="res://objects/player/Climb.gd" id="4_2ehjw"]
+[ext_resource type="Script" path="res://objects/player/StateMachine/Idle.gd" id="5_6pvtv"]
+[ext_resource type="Script" path="res://objects/player/StateMachine/Run.gd" id="6_q5vx6"]
+[ext_resource type="Script" path="res://objects/player/StateMachine/Air.gd" id="7_q0tn7"]
+[ext_resource type="Script" path="res://objects/player/StateMachine/Jump.gd" id="8_856fg"]
+[ext_resource type="Curve" path="res://objects/player/run_curve.tres" id="8_iqy3b"]
+[ext_resource type="Script" path="res://objects/player/StateMachine/Crouch.gd" id="9_84rn1"]
+[ext_resource type="Script" path="res://objects/player/StateMachine/Mantle.gd" id="18_433q2"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oyfeb"]
+radius = 0.25
+height = 1.9
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p17bk"]
+radius = 0.25
+height = 0.75
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rdl2t"]
+height = 0.1
+radius = 0.2
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_ckefi"]
+size = Vector3(0.4, 1.6, 0.3)
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5qlqq"]
+radius = 0.248
+height = 0.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_ofnkf"]
+height = 0.5
+radius = 0.35
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_u3y0t"]
+height = 0.5
+radius = 0.35
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_mkr1h"]
+height = 0.8
+radius = 0.45
+
+[sub_resource type="LabelSettings" id="LabelSettings_mm6q2"]
+font_size = 34
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_f0lxb"]
+font_size = 29
+outline_size = 5
+outline_color = Color(0.0962047, 0.0962048, 0.0962047, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_x328j"]
+font_size = 42
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("legs", "head", "climb")]
+collision_layer = 2
+script = ExtResource("1_oa43o")
+legs = NodePath("Legs")
+head = NodePath("Head")
+climb = NodePath("Climb")
+gravity = 17.0
+jump_power = 6.21
+
+[node name="StandCollision" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_oyfeb")
+
+[node name="CrouchCollision" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.425, 0)
+shape = SubResource("CapsuleShape3D_p17bk")
+disabled = true
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("3_kj3jh")
+
+[node name="HeadFreeSpaceCast" type="ShapeCast3D" parent="Head"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.250672, 0)
+enabled = false
+shape = SubResource("CylinderShape3D_rdl2t")
+target_position = Vector3(0, 0.45, 0)
+
+[node name="Camera" type="Camera3D" parent="Head"]
+unique_name_in_owner = true
+
+[node name="Climb" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("4_2ehjw")
+
+[node name="ObstacleHeight" type="RayCast3D" parent="Climb"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.851986, -0.365159)
+target_position = Vector3(0, -2, 0)
+debug_shape_custom_color = Color(0, 0.94902, 0, 1)
+
+[node name="ObstacleObstr" type="RayCast3D" parent="Climb"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162644, -0.291806)
+target_position = Vector3(0, 0, -0.7)
+debug_shape_custom_color = Color(0, 0.94902, 0, 1)
+
+[node name="ObstacleDetector" type="ShapeCast3D" parent="Climb"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162644, -0.248098)
+shape = SubResource("BoxShape3D_ckefi")
+target_position = Vector3(0, 0, -0.25)
+debug_shape_custom_color = Color(0.146232, 0.90059, 3.46541e-06, 1)
+
+[node name="Legs" type="Node3D" parent="."]
+script = ExtResource("3_sof65")
+
+[node name="FloorCast" type="ShapeCast3D" parent="Legs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.301, 0)
+enabled = false
+shape = SubResource("CapsuleShape3D_5qlqq")
+target_position = Vector3(0, -0.68, 0)
+
+[node name="FloorRay" type="RayCast3D" parent="Legs/FloorCast"]
+enabled = false
+target_position = Vector3(0, -0.45, 0)
+
+[node name="StairsCast" type="ShapeCast3D" parent="Legs"]
+transform = Transform3D(0.999996, 0, -0.00274016, 0, 1, 0, 0.00274016, 0, 0.999996, 0, 0.281829, 0)
+enabled = false
+shape = SubResource("CylinderShape3D_ofnkf")
+target_position = Vector3(0, 0, 0)
+
+[node name="StairsBeneath" type="ShapeCast3D" parent="Legs/StairsCast"]
+enabled = false
+shape = SubResource("CylinderShape3D_u3y0t")
+target_position = Vector3(0, -0.5, 0)
+
+[node name="FreeSpaceRayCast" type="RayCast3D" parent="Legs/StairsCast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+enabled = false
+target_position = Vector3(0, 0, -0.75)
+
+[node name="StairsFloorRayCast" type="RayCast3D" parent="Legs/StairsCast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+enabled = false
+
+[node name="StairsNear" type="ShapeCast3D" parent="Legs/StairsCast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.151852, 0)
+enabled = false
+shape = SubResource("CylinderShape3D_mkr1h")
+target_position = Vector3(0, 0, 0)
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+unique_name_in_owner = true
+script = ExtResource("2_p4q1k")
+current_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("5_6pvtv")
+
+[node name="Run" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("6_q5vx6")
+running_curve = ExtResource("8_iqy3b")
+
+[node name="Air" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("7_q0tn7")
+can_jump_in_this_state = false
+
+[node name="CoyoteTimer" type="Timer" parent="FiniteStateMachine/Air"]
+process_callback = 0
+wait_time = 0.3
+one_shot = true
+
+[node name="Jump" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("8_856fg")
+can_jump_in_this_state = false
+
+[node name="Crouch" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("9_84rn1")
+can_jump_in_this_state = false
+can_crouch_in_this_state = false
+slide_node = null
+
+[node name="Mantle" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("18_433q2")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 77.0
+offset_top = 505.0
+offset_right = 216.0
+offset_bottom = 575.0
+text = "NTRCN TRNMCG"
+label_settings = SubResource("LabelSettings_mm6q2")
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+visible = false
+light_mask = 0
+offset_left = 586.0
+offset_top = 51.0
+offset_right = 1117.0
+offset_bottom = 121.0
+text = "NTRCN TRNMCG"
+label_settings = SubResource("LabelSettings_f0lxb")
+horizontal_alignment = 2
+
+[node name="Label4" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+light_mask = 0
+offset_left = 586.0
+offset_top = 505.0
+offset_right = 1117.0
+offset_bottom = 575.0
+text = "NTRCN TRNMCG"
+label_settings = SubResource("LabelSettings_f0lxb")
+horizontal_alignment = 2
+
+[node name="Label5" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+light_mask = 0
+offset_left = 592.0
+offset_top = 421.0
+offset_right = 1123.0
+offset_bottom = 491.0
+text = "gay hotdog
+"
+label_settings = SubResource("LabelSettings_f0lxb")
+horizontal_alignment = 2
+
+[node name="Label" type="Label" parent="CanvasLayer"]
+offset_left = 82.0
+offset_top = 54.0
+offset_right = 170.0
+offset_bottom = 112.0
+text = "0/10
+"
+label_settings = SubResource("LabelSettings_x328j")
+
+[connection signal="timeout" from="FiniteStateMachine/Air/CoyoteTimer" to="FiniteStateMachine/Air" method="coyote_disable_jump"]
