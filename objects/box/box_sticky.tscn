@@ -1,0 +1,136 @@
+[gd_scene load_steps=11 format=3 uid="uid://d4qcpciovmrf"]
+
+[ext_resource type="Script" path="res://objects/box/box_sticky.gd" id="1_01x5r"]
+[ext_resource type="Texture2D" uid="uid://dx15qt3ms7gau" path="res://textures/paper.jpg" id="1_u35av"]
+
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qtly5"]
+friction = 0.55
+bounce = 0.76
+absorbent = true
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_psswv"]
+resource_local_to_scene = true
+albedo_color = Color(0.303228, 0.647729, 0.366441, 1)
+albedo_texture = ExtResource("1_u35av")
+grow = true
+
+[sub_resource type="BoxMesh" id="BoxMesh_0wcdk"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_psswv")
+
+[sub_resource type="Animation" id="Animation_dtyxx"]
+resource_name = "appear"
+length = 0.2
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:grow_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.0717937, 1),
+"update": 0,
+"values": [0.5, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.175),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.5, 0.5, 0.5), Vector3(1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.535887, 6.27667),
+"update": 0,
+"values": [Vector3(0.610865, 1.5708, -1.71042), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wu5f4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:grow_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_376yb"]
+_data = {
+"RESET": SubResource("Animation_wu5f4"),
+"appear": SubResource("Animation_dtyxx")
+}
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_dl3oj"]
+resource_local_to_scene = true
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_vck8n"]
+resource_local_to_scene = true
+
+[node name="BoxSticky" type="RigidBody3D"]
+collision_layer = 8
+collision_mask = 9
+mass = 15.0
+physics_material_override = SubResource("PhysicsMaterial_qtly5")
+script = ExtResource("1_01x5r")
+force_power = 150.0
+coll_grounded = 9
+coll_fall = 8
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_0wcdk")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_376yb")
+}
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_dl3oj")
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="."]
+shape = SubResource("BoxShape3D_vck8n")
+target_position = Vector3(0, 0, 0)

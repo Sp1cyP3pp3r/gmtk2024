@@ -1,48 +1,127 @@
 [gd_scene load_steps=10 format=3 uid="uid://bwk6kmpurm4qq"]
 
-[ext_resource type="Shader" path="res://materials/toon.gdshader" id="1_nljum"]
+[ext_resource type="Script" path="res://objects/box/box.gd" id="1_l6mwj"]
 [ext_resource type="Texture2D" uid="uid://dx15qt3ms7gau" path="res://textures/paper.jpg" id="1_yby0y"]
 
-[sub_resource type="Gradient" id="Gradient_eltqq"]
+[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qtly5"]
+friction = 0.55
+bounce = 0.76
+absorbent = true
 
-[sub_resource type="FastNoiseLite" id="FastNoiseLite_4qpjg"]
+[sub_resource type="BoxShape3D" id="BoxShape3D_2swks"]
+resource_local_to_scene = true
 
-[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_0xts6"]
-color_ramp = SubResource("Gradient_eltqq")
-noise = SubResource("FastNoiseLite_4qpjg")
-
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_0yg3x"]
-render_priority = 0
-shader = ExtResource("1_nljum")
-shader_parameter/ToonRampOffset = 0.7
-shader_parameter/ToonRampSmoothness = 0.45
-shader_parameter/ToonRampTinting = null
-shader_parameter/RimPower = 1.906
-shader_parameter/RimCutOff = 0.334
-shader_parameter/RimSmoothness = 0.289
-shader_parameter/RimLightBrightness = 6.93
-shader_parameter/SubSurfDistortion = 3.611
-shader_parameter/SubSurfTint = null
-shader_parameter/SubSurfBrightness = 3.27
-shader_parameter/SubSurfCutoff = 0.378
-shader_parameter/SubSurfSmoothness = 0.05
-shader_parameter/SubSurfTexture = SubResource("NoiseTexture2D_0xts6")
-shader_parameter/Texture = ExtResource("1_yby0y")
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpc17"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_88lcr"]
+resource_local_to_scene = true
 albedo_texture = ExtResource("1_yby0y")
+grow = true
 
-[sub_resource type="BoxMesh" id="BoxMesh_dugb5"]
-material = SubResource("StandardMaterial3D_vpc17")
+[sub_resource type="BoxMesh" id="BoxMesh_42h6v"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_88lcr")
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_5yrus"]
-points = PackedVector3Array(0.5, 0.5, 0.5, 0.5, 0.5, -0.5, -0.5, 0.5, 0.5, 0.5, -0.5, 0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5, 0.5, -0.5, -0.5, -0.5)
+[sub_resource type="Animation" id="Animation_dtyxx"]
+resource_name = "appear"
+length = 0.2
+step = 0.025
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:grow_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.0717937, 1),
+"update": 0,
+"values": [0.5, 0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.175),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [Vector3(0.5, 0.5, 0.5), Vector3(1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0, 0.2),
+"transitions": PackedFloat32Array(0.535887, 6.27667),
+"update": 0,
+"values": [Vector3(0.610865, 1.5708, -1.71042), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_wu5f4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:grow_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_376yb"]
+_data = {
+"RESET": SubResource("Animation_wu5f4"),
+"appear": SubResource("Animation_dtyxx")
+}
 
 [node name="Box" type="RigidBody3D"]
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
-material_overlay = SubResource("ShaderMaterial_0yg3x")
-mesh = SubResource("BoxMesh_dugb5")
+collision_layer = 8
+collision_mask = 9
+mass = 15.0
+physics_material_override = SubResource("PhysicsMaterial_qtly5")
+script = ExtResource("1_l6mwj")
+coll_grounded = 9
+coll_fall = 8
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
-shape = SubResource("ConvexPolygonShape3D_5yrus")
+shape = SubResource("BoxShape3D_2swks")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_42h6v")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_376yb")
+}

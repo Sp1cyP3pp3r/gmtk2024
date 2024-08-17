@@ -1,12 +1,15 @@
-[gd_scene load_steps=23 format=3 uid="uid://c1n8xrti8afpc"]
+[gd_scene load_steps=28 format=3 uid="uid://c1n8xrti8afpc"]
 
 [ext_resource type="Script" path="res://objects/player/player.gd" id="1_oa43o"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_p4q1k"]
 [ext_resource type="Script" path="res://objects/player/head.gd" id="3_kj3jh"]
 [ext_resource type="Script" path="res://objects/player/legs.gd" id="3_sof65"]
 [ext_resource type="Script" path="res://objects/player/Climb.gd" id="4_2ehjw"]
+[ext_resource type="Shader" path="res://materials/toon.gdshader" id="4_pe4gi"]
 [ext_resource type="Script" path="res://objects/player/StateMachine/Idle.gd" id="5_6pvtv"]
+[ext_resource type="Script" path="res://addons/shaker/src/Vector3/shaker_component3D.gd" id="5_s3t0l"]
 [ext_resource type="Script" path="res://objects/player/StateMachine/Run.gd" id="6_q5vx6"]
+[ext_resource type="Resource" uid="uid://dakufr1eoowxf" path="res://addons/shaker/data/resources/strong_shake3D.tres" id="6_wrkh5"]
 [ext_resource type="Script" path="res://objects/player/StateMachine/Air.gd" id="7_q0tn7"]
 [ext_resource type="Script" path="res://objects/player/StateMachine/Jump.gd" id="8_856fg"]
 [ext_resource type="Script" path="res://objects/player/StateMachine/Crouch.gd" id="9_84rn1"]
@@ -18,12 +21,32 @@ radius = 0.25
 height = 1.9
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p17bk"]
-radius = 0.25
-height = 0.75
+radius = 0.125
+height = 0.3
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_rdl2t"]
 height = 0.1
 radius = 0.2
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_tm6mg"]
+render_priority = 0
+shader = ExtResource("4_pe4gi")
+shader_parameter/outlineColor = Color(0.935198, 0.927595, 0.929488, 1)
+shader_parameter/depth_threshold = 0.025
+shader_parameter/normal_threshold = 0.5
+shader_parameter/normal_smoothing = 0.087
+shader_parameter/max_thickness = 2.0
+shader_parameter/min_thickness = 0.5
+shader_parameter/max_distance = 75.0
+shader_parameter/min_distance = 2.0
+shader_parameter/grazing_fresnel_power = 5.0
+shader_parameter/grazing_angle_mask_power = 1.0
+shader_parameter/grazing_angle_modulation_factor = 50.0
+
+[sub_resource type="QuadMesh" id="QuadMesh_hdmj0"]
+material = SubResource("ShaderMaterial_tm6mg")
+flip_faces = true
+size = Vector2(2, 2)
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ckefi"]
 size = Vector3(0.4, 1.6, 0.3)
@@ -54,6 +77,7 @@ outline_color = Color(0, 0, 0, 1)
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("legs", "head", "climb")]
 collision_layer = 2
+collision_mask = 9
 script = ExtResource("1_oa43o")
 legs = NodePath("Legs")
 head = NodePath("Head")
@@ -68,7 +92,7 @@ shape = SubResource("CapsuleShape3D_oyfeb")
 
 [node name="CrouchCollision" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.425, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.202543, 0)
 shape = SubResource("CapsuleShape3D_p17bk")
 disabled = true
 
@@ -84,9 +108,22 @@ target_position = Vector3(0, 0.45, 0)
 
 [node name="Camera" type="Camera3D" parent="Head"]
 unique_name_in_owner = true
+transform = Transform3D(1, -2.98024e-08, -7.91442e-09, 2.98024e-08, 1, 6.75203e-09, 7.91442e-09, -6.75203e-09, 1, -7.59028e-08, 2.69152e-07, 2.5332e-07)
 
 [node name="Gun" parent="Head/Camera" instance=ExtResource("12_8okjr")]
 transform = Transform3D(1, 0, 1.42109e-14, 0, 1, 0, -1.42109e-14, 0, 1, 0.304331, -0.219733, -0.464747)
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="Head/Camera"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.144857)
+mesh = SubResource("QuadMesh_hdmj0")
+
+[node name="ShakerComponent3D" type="Node3D" parent="Head/Camera"]
+script = ExtResource("5_s3t0l")
+intensity = 0.1
+duration = 0.6
+fade_in = 0.0796601
+fade_out = 4.92458
+shakerPreset = ExtResource("6_wrkh5")
 
 [node name="Climb" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
@@ -215,6 +252,7 @@ text = "NTRCN TRNMCG"
 label_settings = SubResource("LabelSettings_mm6q2")
 horizontal_alignment = 2
 
+[connection signal="shooted" from="Head/Camera/Gun" to="Head/Camera/ShakerComponent3D" method="play_shake"]
 [connection signal="update_ledge" from="Climb" to="Climb" method="has_free_way"]
 [connection signal="update_ledge" from="Climb" to="FiniteStateMachine/Mantle" method="get_mantle_point"]
 [connection signal="timeout" from="FiniteStateMachine/Air/CoyoteTimer" to="FiniteStateMachine/Air" method="coyote_disable_jump"]

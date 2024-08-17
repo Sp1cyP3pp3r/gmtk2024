@@ -1,4 +1,4 @@
-[gd_scene load_steps=15 format=4 uid="uid://cebrbw00uf83n"]
+[gd_scene load_steps=16 format=4 uid="uid://cebrbw00uf83n"]
 
 [ext_resource type="PackedScene" uid="uid://btw3b8g0fag8w" path="res://models/KenneyBlasters/blasterG.glb" id="1_8idwd"]
 [ext_resource type="Script" path="res://objects/gun/gun.gd" id="1_prfgq"]
@@ -122,6 +122,10 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_xosmq")
 
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_wfj1i"]
+height = 0.25
+radius = 0.1
+
 [sub_resource type="Animation" id="Animation_4tip8"]
 length = 0.001
 tracks/0/type = "value"
@@ -235,7 +239,7 @@ _data = {
 script = ExtResource("1_prfgq")
 bullet_scene = ExtResource("2_02olv")
 bullet_speed = 200.0
-firerate = 1.0
+firerate = 1.55
 
 [node name="blasterG2" parent="." instance=ExtResource("1_8idwd")]
 
@@ -244,7 +248,12 @@ transform = Transform3D(-1, 0, 8.74228e-08, 0, 1, 0, -8.74228e-08, 0, -1, 0, 0, 
 mesh = SubResource("ArrayMesh_yukm2")
 
 [node name="Gunpoint" type="Marker3D" parent="blasterG2"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.081807, -0.419764)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.081807, -0.493403)
+
+[node name="FreeSpace" type="ShapeCast3D" parent="blasterG2/Gunpoint"]
+transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
+shape = SubResource("CylinderShape3D_wfj1i")
+target_position = Vector3(0, 0, 0)
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
