@@ -1,4 +1,4 @@
-[gd_scene load_steps=21 format=3 uid="uid://c1n8xrti8afpc"]
+[gd_scene load_steps=23 format=3 uid="uid://c1n8xrti8afpc"]
 
 [ext_resource type="Script" path="res://objects/player/player.gd" id="1_oa43o"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_p4q1k"]
@@ -10,6 +10,7 @@
 [ext_resource type="Script" path="res://objects/player/StateMachine/Air.gd" id="7_q0tn7"]
 [ext_resource type="Script" path="res://objects/player/StateMachine/Jump.gd" id="8_856fg"]
 [ext_resource type="Script" path="res://objects/player/StateMachine/Crouch.gd" id="9_84rn1"]
+[ext_resource type="PackedScene" uid="uid://cebrbw00uf83n" path="res://objects/gun/gun.tscn" id="12_8okjr"]
 [ext_resource type="Script" path="res://objects/player/StateMachine/Mantle.gd" id="18_433q2"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oyfeb"]
@@ -26,6 +27,9 @@ radius = 0.2
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ckefi"]
 size = Vector3(0.4, 1.6, 0.3)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_eue55"]
+radius = 0.25
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5qlqq"]
 radius = 0.248
@@ -81,6 +85,9 @@ target_position = Vector3(0, 0.45, 0)
 [node name="Camera" type="Camera3D" parent="Head"]
 unique_name_in_owner = true
 
+[node name="Gun" parent="Head/Camera" instance=ExtResource("12_8okjr")]
+transform = Transform3D(1, 0, 1.42109e-14, 0, 1, 0, -1.42109e-14, 0, 1, 0.304331, -0.219733, -0.464747)
+
 [node name="Climb" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 script = ExtResource("4_2ehjw")
@@ -88,6 +95,7 @@ script = ExtResource("4_2ehjw")
 [node name="ObstacleHeight" type="RayCast3D" parent="Climb"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.851986, -0.365159)
 target_position = Vector3(0, -2, 0)
+hit_back_faces = false
 debug_shape_custom_color = Color(0.271951, 0.866286, 1, 1)
 
 [node name="ObstacleObstr" type="RayCast3D" parent="Climb"]
@@ -101,17 +109,26 @@ shape = SubResource("BoxShape3D_ckefi")
 target_position = Vector3(0, 0, -0.25)
 debug_shape_custom_color = Color(0.271951, 0.866286, 1, 1)
 
-[node name="FreeSpaceStanding" type="ShapeCast3D" parent="Climb"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.359272)
+[node name="HeightSpringArm" type="SpringArm3D" parent="Climb"]
+transform = Transform3D(1, -4.37114e-08, 4.37114e-08, 4.37114e-08, -4.37114e-08, -1, 4.37114e-08, 1, -4.37114e-08, 0, 1.26916, -0.412127)
+shape = SubResource("SphereShape3D_eue55")
+spring_length = 2.25
+
+[node name="FreeSpaceContainer" type="Node3D" parent="Climb/HeightSpringArm"]
+
+[node name="FreeSpaceStanding" type="ShapeCast3D" parent="Climb/HeightSpringArm/FreeSpaceContainer"]
+unique_name_in_owner = true
+transform = Transform3D(1, 4.37114e-08, 4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, 9.06192e-08, 0.0152814, -0.91247)
 shape = SubResource("CapsuleShape3D_oyfeb")
 target_position = Vector3(0, 0, 0)
-debug_shape_custom_color = Color(0.262448, 0.859052, 0, 1)
+debug_shape_custom_color = Color(4.81308e-08, 0.668004, 0.481005, 1)
 
-[node name="FreeSpaceCrouch" type="ShapeCast3D" parent="Climb"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.575, -0.359272)
+[node name="FreeSpaceCrouch" type="ShapeCast3D" parent="Climb/HeightSpringArm/FreeSpaceContainer"]
+unique_name_in_owner = true
+transform = Transform3D(1, 4.37114e-08, 4.37114e-08, -4.37114e-08, -4.37114e-08, 1, 4.37114e-08, -1, -4.37114e-08, 6.54852e-08, 0.0152815, -0.33747)
 shape = SubResource("CapsuleShape3D_p17bk")
 target_position = Vector3(0, 0, 0)
-debug_shape_custom_color = Color(1, 0.298039, 0.298039, 1)
+debug_shape_custom_color = Color(0.562039, 0.0039935, 0.972096, 1)
 
 [node name="Legs" type="Node3D" parent="."]
 script = ExtResource("3_sof65")
@@ -198,5 +215,8 @@ text = "NTRCN TRNMCG"
 label_settings = SubResource("LabelSettings_mm6q2")
 horizontal_alignment = 2
 
+[connection signal="update_ledge" from="Climb" to="Climb" method="has_free_way"]
 [connection signal="update_ledge" from="Climb" to="FiniteStateMachine/Mantle" method="get_mantle_point"]
 [connection signal="timeout" from="FiniteStateMachine/Air/CoyoteTimer" to="FiniteStateMachine/Air" method="coyote_disable_jump"]
+[connection signal="gun_down" from="FiniteStateMachine/Mantle" to="Head/Camera/Gun" method="mantle_start"]
+[connection signal="gun_up" from="FiniteStateMachine/Mantle" to="Head/Camera/Gun" method="mantle_end"]

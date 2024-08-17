@@ -12,6 +12,8 @@ class_name Player
 
 @onready var state_machine = %FiniteStateMachine
 
+var is_mantling : bool = false
+
 func _physics_process(delta):
 	if Input.is_key_pressed(KEY_R):
 		get_tree().reload_current_scene()

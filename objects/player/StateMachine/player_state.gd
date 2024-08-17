@@ -114,11 +114,15 @@ func handle_uncrouch() -> void:
 			change_state("Run")
 
 func handle_mantle() -> void:
-	if player.velocity.y >= -20:
-		if player.climb.is_obstacle() and not player.climb.is_wall():
-			if player.climb.has_freespace_crouching():
-				%Mantle.crouch = true
-				if player.climb.has_freespace_standing():
-					%Mantle.crouch = false
-				change_state("Mantle")
+	if not player.is_mantling:
+		if player.velocity.y >= -20:
+			if player.climb.is_obstacle() and not player.climb.is_wall():
+				var _height =  player.climb.get_obstacle_height()
+				if _height >= 0.55 and _height <= 1.8:
+					if player.climb.has_free_way():
+						if player.climb.has_freespace_crouching():
+							%Mantle.crouch = true
+							if player.climb.has_freespace_standing():
+								%Mantle.crouch = false
+							change_state("Mantle")
 	pass

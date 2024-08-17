@@ -3,10 +3,12 @@ extends Node3D
 @onready var obstacle_detector: ShapeCast3D = $ObstacleDetector
 @onready var obstacle_height: RayCast3D = $ObstacleHeight
 @onready var obstacle_obstr: RayCast3D = $ObstacleObstr
-@onready var free_space_standing: ShapeCast3D = $FreeSpaceStanding
-@onready var free_space_crouch: ShapeCast3D = $FreeSpaceCrouch
+@onready var free_space_standing: ShapeCast3D = %FreeSpaceStanding
+@onready var free_space_crouch: ShapeCast3D = %FreeSpaceCrouch
+@onready var height_spring_arm: SpringArm3D = $HeightSpringArm
 
 
+var current_target : Vector3
 var current_position : Vector3
 var init_position : Vector3
 
@@ -39,23 +41,33 @@ func get_obstacle_height() -> float:
 	if not obstacle_height.is_colliding():
 		# Is inside a wall
 		return 999.9
-	var _point : Vector3 = obstacle_height.get_collision_point()
-	var _value : float = abs(owner.global_position.y - _point.y)
-	update_ledge.emit(_point)
+	current_target = obstacle_height.get_collision_point()
+	var _value : float = abs(owner.global_position.y - current_target.y)
+	update_ledge.emit(current_target)
 	return _value
 
 func has_freespace_standing() -> bool:
-	var _margin = -init_position.y + 0.01 + free_space_standing.shape.height
-	free_space_standing.position.y = get_obstacle_height() - _margin
+	#var _margin = -init_position.y + 0.01 + free_space_standing.shape.height
+	#free_space_standing.position.y = get_obstacle_height() - _margin
 	free_space_standing.force_shapecast_update()
 	if free_space_standing.is_colliding():
 		return false
 	return true
 	
-func has_freespace_crouching():
-	var _margin =  0.01 + free_space_crouch.shape.height + 0.225 
-	free_space_crouch.position.y = get_obstacle_height() - _margin
+func has_freespace_crouching() -> bool:
+	#var _margin =  0.01 + free_space_crouch.shape.height + 0.225 
+	#free_space_crouch.position.y = get_obstacle_height() - _margin
 	free_space_crouch.force_shapecast_update()
 	if free_space_crouch.is_colliding():
+		return false
+	return true
+
+func has_free_way() -> bool:
+	obstacle_obstr.global_position = %Camera.global_position
+	var dir = obstacle_obstr.global_position.direction_to(current_target + Vector3(0, 0.5, 0))
+	var dist = obstacle_detector.global_position.distance_to(current_target)
+	obstacle_obstr.target_position = dir * dist
+	obstacle_obstr.force_raycast_update()
+	if obstacle_obstr.is_colliding():
 		return false
 	return true

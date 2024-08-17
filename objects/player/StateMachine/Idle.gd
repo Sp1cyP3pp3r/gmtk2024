@@ -4,6 +4,9 @@ extends PlayerState
 # Called when the state machine enters this state.
 func on_enter():
 	player.acceleration = 15.0
+	player.global_rotation.y = player.head.camera.global_rotation.y
+	player.head.camera.rotation.y = 0
+	player.head.do_rotate_owner = true
 
 # Called every physics frame when this state is active.
 func on_physics_process(delta):
