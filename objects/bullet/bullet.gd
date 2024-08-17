@@ -27,6 +27,6 @@ func create_box():
 	direction.normalized()
 	var force = direction * force_speed
 	the_box.global_position = global_position
-	the_box.global_position += normal * (the_box.collision_shape.size.length()) / 10
+	#the_box.global_position += normal * (the_box.collision_shape.size.length()) / 10
 	the_box.look_at(the_box.global_position + normal * 2)
 	the_box.apply_impulse(force)

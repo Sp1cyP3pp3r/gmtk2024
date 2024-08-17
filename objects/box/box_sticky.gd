@@ -14,5 +14,5 @@ func _physics_process(delta: float) -> void:
 		var direction = -normal + (Vector3.UP * 1 * (1 - dot))
 		direction.normalized()
 		
-		var force = direction * force_power
+		var force = direction * (force_power * (size / 4 + 0.25) )
 		apply_force(force)

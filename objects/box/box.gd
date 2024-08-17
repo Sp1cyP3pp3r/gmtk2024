@@ -25,6 +25,7 @@ func _physics_process(delta: float) -> void:
 	else:
 		collision_layer = coll_grounded
 	
+	size = clamp(size, 0.5, 5)
 	collision_shape.size = Vector3(1, 1, 1) * size
 	mesh.mesh.size = Vector3(1, 1, 1) * size
 	mass = initial_mass * size/2 + 0.5
