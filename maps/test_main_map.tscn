@@ -1,4 +1,4 @@
-[gd_scene load_steps=134 format=4 uid="uid://dkbwcbx7sqe3n"]
+[gd_scene load_steps=135 format=4 uid="uid://dkbwcbx7sqe3n"]
 
 [ext_resource type="Script" path="res://addons/func_godot/src/map/func_godot_map.gd" id="3_gngig"]
 [ext_resource type="Resource" uid="uid://bkhxcqsquw1yg" path="res://addons/func_godot/func_godot_default_map_settings.tres" id="4_vv5h6"]
@@ -20,6 +20,7 @@
 [ext_resource type="Texture2D" uid="uid://cmjdf3cgpx6o5" path="res://textures/green_metal.jpg" id="17_x0aby"]
 [ext_resource type="Material" uid="uid://csaoutim2wpbg" path="res://textures/green_diamon_metal.tres" id="18_1uvo3"]
 [ext_resource type="PackedScene" uid="uid://bih76q0b13amv" path="res://objects/bullet/bullet.tscn" id="20_xu7gl"]
+[ext_resource type="PackedScene" uid="uid://cfy6qqmef8ymf" path="res://objects/box/box_floaty.tscn" id="21_ld0as"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_6kj6b"]
 sky_horizon_color = Color(0.64625, 0.65575, 0.67075, 1)
@@ -886,3 +887,12 @@ shape = SubResource("ConvexPolygonShape3D_dq28e")
 
 [node name="Box" parent="." instance=ExtResource("17_mpniq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.97564, 31, -4.56476)
+size = 2.0
+
+[node name="Box2" parent="." instance=ExtResource("17_mpniq")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.74717, 37, 2.76546)
+size = 1.5
+
+[node name="BoxFloaty" parent="." instance=ExtResource("21_ld0as")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.751, 38.5739, -2.10743)
+size = 5.0

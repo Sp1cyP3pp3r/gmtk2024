@@ -3,7 +3,7 @@ extends PlayerState
 
 # Called when the state machine enters this state.
 func on_enter():
-	player.acceleration = 1.2
+	player.acceleration = 2.5
 	player.velocity.y = player.jump_power * 1.1
 
 

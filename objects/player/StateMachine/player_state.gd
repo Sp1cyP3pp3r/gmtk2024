@@ -21,7 +21,8 @@ func handle_movement(delta) -> void:
 	var direction = input_dir.rotated(-player.rotation.y)
 	direction = Vector3(direction.x, 0, direction.y)
 	var _dot = direction.dot(-player.global_transform.basis.z)
-	var _dot_p = _dot * 0.25 + 0.75
+	var _dot_p = _dot * 0.25 + 1 #0.75
+	_dot_p = clamp(_dot_p, 0, 1)
 	var total_speed = player.speed
 	player.velocity.x = lerp(player.velocity.x, direction.x * total_speed * _dot_p, player.acceleration * delta)
 	player.velocity.z = lerp(player.velocity.z, direction.z * total_speed * _dot_p, player.acceleration * delta)

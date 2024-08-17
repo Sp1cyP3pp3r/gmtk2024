@@ -4,7 +4,7 @@ var _power = 0.01
 
 # Called when the state machine enters this state.
 func on_enter():
-	player.acceleration = 0.8
+	player.acceleration = 1.8
 	if %FiniteStateMachine._previous_state.name == "Run"  or %FiniteStateMachine._previous_state.name == "Idle":
 		can_jump_in_this_state = true
 		$CoyoteTimer.start()

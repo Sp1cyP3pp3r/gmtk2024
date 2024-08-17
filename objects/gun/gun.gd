@@ -53,20 +53,22 @@ func fire():
 					
 					fired_bullet.global_position = gunpoint.global_position
 					fired_bullet.global_rotation = global_rotation
-					fired_bullet.apply_force(-global_basis.z * bullet_speed)
+					fired_bullet.apply_impulse(-global_basis.z * bullet_speed)
 					
 					match current_ammo:
 						AMMO_TYPE.Normal:
 							fired_bullet.box_scene = preload("res://objects/box/box.tscn")
-							fired_bullet.force_speed = 300
+							fired_bullet.force_speed = 20
 							
 						AMMO_TYPE.Floaty:
 							fired_bullet.box_scene = preload("res://objects/box/box_floaty.tscn")
-							fired_bullet.force_speed = 100
+							fired_bullet.force_speed = 2.5
 						
 						AMMO_TYPE.Sticky:
 							fired_bullet.box_scene = preload("res://objects/box/box_sticky.tscn")
-							fired_bullet.force_speed = 50
+							fired_bullet.force_speed = 3
+				else:
+					pass
 			
 			var _reload_time = 1 / firerate
 			if not _reload_time < 0.01:

@@ -29,4 +29,4 @@ func create_box():
 	the_box.global_position = global_position
 	the_box.global_position += normal * (the_box.collision_shape.size.length()) / 10
 	the_box.look_at(the_box.global_position + normal * 2)
-	the_box.apply_force(force)
+	the_box.apply_impulse(force)

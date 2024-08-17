@@ -3,6 +3,8 @@ extends PlayerState
 
 # Called when the state machine enters this state.
 func on_enter():
+	%CrouchCollision.disabled = false
+	%StandCollision.disabled = true
 	tween_camera_crouch()
 	player.speed = 2.5
 	player.acceleration = 50

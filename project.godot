@@ -21,7 +21,7 @@ Shaker="*res://addons/shaker/src/Shaker.gd"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/finite_state_machine/plugin.cfg", "res://addons/func_godot/plugin.cfg", "res://addons/project_time_tracker/plugin.cfg", "res://addons/qodot/plugin.cfg", "res://addons/shaker/plugin.cfg")
+enabled=PackedStringArray("res://addons/finite_state_machine/plugin.cfg", "res://addons/func_godot/plugin.cfg", "res://addons/project_time_tracker/plugin.cfg", "res://addons/shaker/plugin.cfg")
 
 [input]
 

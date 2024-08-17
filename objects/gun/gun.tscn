@@ -238,7 +238,7 @@ _data = {
 [node name="Gun" type="Node3D"]
 script = ExtResource("1_prfgq")
 bullet_scene = ExtResource("2_02olv")
-bullet_speed = 200.0
+bullet_speed = 4.0
 firerate = 1.55
 
 [node name="blasterG2" parent="." instance=ExtResource("1_8idwd")]

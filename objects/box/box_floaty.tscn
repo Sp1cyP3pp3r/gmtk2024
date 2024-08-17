@@ -8,8 +8,8 @@ friction = 0.55
 bounce = 0.76
 absorbent = true
 
-[sub_resource type="Curve" id="Curve_2vfj6"]
-_data = [Vector2(0, 0.335849), 0.0, 0.0, 0, 0, Vector2(0.433511, 0.456604), 0.0, 0.0, 0, 0, Vector2(0.800532, 0.411321), 0.0, 0.0, 0, 0, Vector2(1, 0.320755), 0.0, 0.0, 0, 0]
+[sub_resource type="Curve" id="Curve_lihv4"]
+_data = [Vector2(0, 0.441509), 0.0, 0.0, 0, 0, Vector2(0.31117, 0.879245), 0.0, 0.0, 0, 0, Vector2(0.587766, 0.864151), 0.0, 0.0, 0, 0, Vector2(1, 0.366038), 0.0, 0.0, 0, 0]
 point_count = 4
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpc17"]
@@ -21,6 +21,45 @@ grow = true
 [sub_resource type="BoxMesh" id="BoxMesh_dugb5"]
 resource_local_to_scene = true
 material = SubResource("StandardMaterial3D_vpc17")
+
+[sub_resource type="Animation" id="Animation_wu5f4"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("MeshInstance3D:mesh:material:grow_amount")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("MeshInstance3D:scale")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("MeshInstance3D:rotation")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
 
 [sub_resource type="Animation" id="Animation_dtyxx"]
 resource_name = "appear"
@@ -63,45 +102,6 @@ tracks/2/keys = {
 "values": [Vector3(0.610865, 1.5708, -1.71042), Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_wu5f4"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("MeshInstance3D:mesh:material:grow_amount")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [0.0]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("MeshInstance3D:scale")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(1, 1, 1)]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("MeshInstance3D:rotation")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 0,
-"values": [Vector3(0, 0, 0)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_376yb"]
 _data = {
 "RESET": SubResource("Animation_wu5f4"),
@@ -114,12 +114,13 @@ resource_local_to_scene = true
 [node name="BoxFloaty" type="RigidBody3D"]
 collision_layer = 8
 collision_mask = 9
-mass = 0.5
+mass = 1.5
 physics_material_override = SubResource("PhysicsMaterial_qtly5")
-gravity_scale = 0.8
-constant_force = Vector3(0, 2, 0)
+gravity_scale = 0.1
+constant_torque = Vector3(0, 0.01, 0)
 script = ExtResource("1_mps03")
-float_curve = SubResource("Curve_2vfj6")
+float_curve = SubResource("Curve_lihv4")
+float_power = 2.0
 coll_grounded = 9
 coll_fall = 8
 

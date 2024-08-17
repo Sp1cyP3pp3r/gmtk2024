@@ -1,4 +1,4 @@
-[gd_scene load_steps=28 format=3 uid="uid://c1n8xrti8afpc"]
+[gd_scene load_steps=29 format=3 uid="uid://c1n8xrti8afpc"]
 
 [ext_resource type="Script" path="res://objects/player/player.gd" id="1_oa43o"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_p4q1k"]
@@ -21,8 +21,8 @@ radius = 0.25
 height = 1.9
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p17bk"]
-radius = 0.125
-height = 0.3
+radius = 0.2
+height = 0.5
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_rdl2t"]
 height = 0.1
@@ -47,6 +47,9 @@ shader_parameter/grazing_angle_modulation_factor = 50.0
 material = SubResource("ShaderMaterial_tm6mg")
 flip_faces = true
 size = Vector2(2, 2)
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_pdxqs"]
+radius = 0.01
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ckefi"]
 size = Vector3(0.4, 1.6, 0.3)
@@ -92,7 +95,7 @@ shape = SubResource("CapsuleShape3D_oyfeb")
 
 [node name="CrouchCollision" type="CollisionShape3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.202543, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.300112, 0)
 shape = SubResource("CapsuleShape3D_p17bk")
 disabled = true
 
@@ -111,7 +114,7 @@ unique_name_in_owner = true
 transform = Transform3D(1, -2.98024e-08, -7.91442e-09, 2.98024e-08, 1, 6.75203e-09, 7.91442e-09, -6.75203e-09, 1, -7.59028e-08, 2.69152e-07, 2.5332e-07)
 
 [node name="Gun" parent="Head/Camera" instance=ExtResource("12_8okjr")]
-transform = Transform3D(1, 0, 1.42109e-14, 0, 1, 0, -1.42109e-14, 0, 1, 0.304331, -0.219733, -0.464747)
+transform = Transform3D(0.986714, -7.01021e-10, 0.162465, 1.49291e-09, 1, -4.75214e-09, -0.162465, 4.93155e-09, 0.986714, 0.303351, -0.216227, -0.370363)
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.144857)
@@ -124,6 +127,15 @@ duration = 0.6
 fade_in = 0.0796601
 fade_out = 4.92458
 shakerPreset = ExtResource("6_wrkh5")
+
+[node name="SpringArm3D" type="SpringArm3D" parent="Head/Camera"]
+transform = Transform3D(1, -5.96048e-08, -1.58288e-08, -5.96048e-08, -1, -8.74228e-08, -1.58288e-08, 8.74228e-08, -1, -1.6198e-09, 0, -0.204664)
+collision_mask = 9
+shape = SubResource("SphereShape3D_pdxqs")
+spring_length = 25.0
+
+[node name="CursorPoint" type="Marker3D" parent="Head/Camera/SpringArm3D"]
+unique_name_in_owner = true
 
 [node name="Climb" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
