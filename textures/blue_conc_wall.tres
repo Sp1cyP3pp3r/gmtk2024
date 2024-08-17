@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://datvxuoprfbak"]
+
+[ext_resource type="Texture2D" uid="uid://towxnbjfdnvw" path="res://textures/blue_conc_wall.jpg" id="1_jivu2"]
+
+[resource]
+albedo_texture = ExtResource("1_jivu2")
+metallic_specular = 0.0
+texture_filter = 2

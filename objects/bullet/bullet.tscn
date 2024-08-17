@@ -1,10 +1,10 @@
-[gd_scene load_steps=9 format=4 uid="uid://bih76q0b13amv"]
+[gd_scene load_steps=8 format=4 uid="uid://bih76q0b13amv"]
 
 [ext_resource type="PackedScene" uid="uid://bcsrxy7cfqvsc" path="res://models/KenneyBlasters/foamBulletA.glb" id="1_dj68n"]
 [ext_resource type="Script" path="res://objects/bullet/bullet.gd" id="1_kiiik"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x2vvx"]
-bounce = 0.5
+bounce = 0.6
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_37d6n"]
 resource_name = "yellow"
@@ -47,15 +47,13 @@ shadow_mesh = SubResource("ArrayMesh_1db38")
 height = 0.42651
 radius = 0.0851369
 
-[sub_resource type="CylinderShape3D" id="CylinderShape3D_6ixjs"]
-height = 0.487722
-radius = 0.116044
-
 [node name="Bullet" type="RigidBody3D"]
 collision_layer = 4
-collision_mask = 11
+collision_mask = 15
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_x2vvx")
+contact_monitor = true
+max_contacts_reported = 1
 script = ExtResource("1_kiiik")
 
 [node name="foamBulletA2" parent="." instance=ExtResource("1_dj68n")]
@@ -68,10 +66,6 @@ mesh = SubResource("ArrayMesh_k7fdk")
 transform = Transform3D(0.999993, 0.00234392, 0.00282196, -0.00281738, -0.001952, 0.999994, 0.00234943, -0.999995, -0.00194537, 0, 0, 0)
 shape = SubResource("CylinderShape3D_xd0oa")
 
-[node name="SurfaceDetection" type="Area3D" parent="."]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="SurfaceDetection"]
-transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
-shape = SubResource("CylinderShape3D_6ixjs")
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
 
 [editable path="foamBulletA2"]

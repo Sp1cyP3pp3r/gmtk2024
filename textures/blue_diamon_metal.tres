@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://rtgc8yjtjnl7"]
+
+[ext_resource type="Texture2D" uid="uid://cfrrsck8juu2a" path="res://textures/blue_diamon_metal.jpg" id="1_kwe0w"]
+
+[resource]
+albedo_texture = ExtResource("1_kwe0w")
+metallic_specular = 0.0
+texture_filter = 2

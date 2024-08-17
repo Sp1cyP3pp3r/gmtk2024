@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://csaoutim2wpbg"]
+
+[ext_resource type="Texture2D" uid="uid://druc1x0bpa4dn" path="res://textures/green_diamon_metal.jpg" id="1_loh38"]
+
+[resource]
+albedo_texture = ExtResource("1_loh38")
+metallic_specular = 0.0
+texture_filter = 2
