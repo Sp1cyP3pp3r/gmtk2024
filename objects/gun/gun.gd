@@ -13,6 +13,7 @@ enum BEAM_TYPE {Enlarge, Shrink}
 @export_group("Stats")
 @export var bullet_speed : float
 @export var firerate : float
+@export var scale_power : float = 0.05
 
 var current_ammo : AMMO_TYPE = AMMO_TYPE.Normal
 var current_beam : BEAM_TYPE = BEAM_TYPE.Enlarge
@@ -66,14 +67,43 @@ func beam():
 		if not ray.is_empty():
 			_to = ray.position
 			if ray.collider is Box:
-				var box = ray.collider
+				var box = ray.collider as Box
+				
+				var face : Basis = box.global_basis.orthonormalized()
+				var normal = ray.normal
+				var direction : Vector3 = normal * face # actual face
+				var value = abs(direction)
+				var final_value = value * scale_power
+				
+				var offset = normal * scale_power / 2
+				
+				if abs(direction).is_equal_approx(Vector3.RIGHT):
+					if box.size.x >= box.max_size:
+						offset = Vector3.ZERO
+					elif box.size.x <= box.min_size:
+						offset = Vector3.ZERO
+				elif abs(direction).is_equal_approx(Vector3.BACK):
+					if box.size.z >= box.max_size:
+						offset = Vector3.ZERO
+					elif box.size.z <= box.min_size:
+						offset = Vector3.ZERO
+				elif abs(direction).is_equal_approx(Vector3.UP):
+					if box.size.y >= box.max_size:
+						offset = Vector3.ZERO
+					elif box.size.y <= box.min_size:
+						offset = Vector3.ZERO
+				
+				
 				match current_beam:
 					BEAM_TYPE.Enlarge:
-						box.size *= 1.01
+						box.size += final_value
+						box.global_position += offset
 						color = Color.BROWN
 						
 					BEAM_TYPE.Shrink:
-						box.size *= 0.99
+						box.size -= final_value
+						box.global_position -= offset
+						
 						color = Color.DARK_CYAN
 						
 						
@@ -131,9 +161,6 @@ func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, persist_ms = 
 	mesh_instance.mesh = immediate_mesh
 	mesh_instance.cast_shadow = GeometryInstance3D.SHADOW_CASTING_SETTING_OFF
 
-	#immediate_mesh.surface_begin(Mesh.PRIMITIVE_LINES, material)
-	#immediate_mesh.surface_add_vertex(pos1)
-	#immediate_mesh.surface_add_vertex(pos2)
 	immediate_mesh.surface_begin(Mesh.PRIMITIVE_TRIANGLES)
 	immediate_mesh.surface_add_vertex(pos1 + Vector3(0, 0.03, -0.04))
 	immediate_mesh.surface_add_vertex(pos1 + Vector3(0.02, -0.06, 0))

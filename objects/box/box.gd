@@ -1,7 +1,9 @@
 extends RigidBody3D
 class_name Box
 
-@export var size : float = 1
+@export var size : Vector3 = Vector3.ONE
+@export var max_size : float = 5
+@export var min_size : float = 0.5
 
 @export_flags_3d_physics var coll_grounded : int
 @export_flags_3d_physics var coll_fall : int
@@ -25,7 +27,10 @@ func _physics_process(delta: float) -> void:
 	else:
 		collision_layer = coll_grounded
 	
-	size = clamp(size, 0.5, 5)
-	collision_shape.size = Vector3(1, 1, 1) * size
-	mesh.mesh.size = Vector3(1, 1, 1) * size
-	mass = initial_mass * size/2 + 0.5
+	size.x = clamp(size.x, min_size, max_size)
+	size.y = clamp(size.y, min_size, max_size)
+	size.z = clamp(size.z, min_size, max_size)
+	
+	collision_shape.size = size
+	mesh.mesh.size = size
+	mass = initial_mass * size.length()/4 + 0.75

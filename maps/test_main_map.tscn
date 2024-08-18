@@ -548,7 +548,7 @@ transform = Transform3D(-0.866023, -0.433016, 0.250001, 0, 0.499998, 0.866027, -
 shadow_enabled = true
 
 [node name="Player" parent="." instance=ExtResource("10_8ukd4")]
-transform = Transform3D(-0.254922, 0, 0.966961, 0, 1, 0, -0.966961, 0, -0.254922, 3.40868, 29.95, -7.80611)
+transform = Transform3D(-0.254922, 0, 0.966961, 0, 1, 0, -0.966961, 0, -0.254922, 2.88679, 39.4469, 3.03203)
 
 [node name="Bullet" parent="." instance=ExtResource("20_xu7gl")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4.64124, 32.5973, -6.27872)
@@ -887,12 +887,36 @@ shape = SubResource("ConvexPolygonShape3D_dq28e")
 
 [node name="Box" parent="." instance=ExtResource("17_mpniq")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.97564, 31, -4.56476)
-size = 2.0
 
 [node name="Box2" parent="." instance=ExtResource("17_mpniq")]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2.74717, 37, 2.76546)
-size = 1.5
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 1.60394, 37, 7.28845)
+
+[node name="Box10" parent="." instance=ExtResource("17_mpniq")]
+transform = Transform3D(0.701298, -0.68547, 0.195735, 0.330115, 0.0689159, -0.941422, 0.631827, 0.724832, 0.274614, -0.193703, 38.1925, 5.30504)
+
+[node name="Box11" parent="." instance=ExtResource("17_mpniq")]
+transform = Transform3D(-0.191391, 0.780262, -0.59545, -0.674329, -0.545351, -0.497868, -0.713197, 0.306242, 0.630529, 3.34546, 38.1925, 1.14803)
+
+[node name="Box4" parent="." instance=ExtResource("17_mpniq")]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -2.7751, 37, 4.06697)
+
+[node name="Box8" parent="." instance=ExtResource("17_mpniq")]
+transform = Transform3D(0.707107, 0, -0.707107, 0, 1, 0, 0.707107, 0, 0.707107, -2.7751, 38, 7.06697)
+
+[node name="Box9" parent="." instance=ExtResource("17_mpniq")]
+transform = Transform3D(9.57573e-08, 0.258819, 0.965926, 1, -4.37114e-08, -8.74228e-08, 1.95953e-08, 0.965926, -0.258819, -2.7751, 38.5754, -1.88496)
+
+[node name="Box5" parent="." instance=ExtResource("17_mpniq")]
+transform = Transform3D(1.31134e-07, 0, 1, 0, 1, 0, -1, 0, 1.31134e-07, 5.2249, 37, 4.06697)
+
+[node name="Box7" parent="." instance=ExtResource("17_mpniq")]
+transform = Transform3D(1.31134e-07, 0, 1, 1, -4.37114e-08, -1.31134e-07, 4.37114e-08, 1, -5.73206e-15, 5.2249, 38.4102, 7.13238)
+
+[node name="Box3" parent="." instance=ExtResource("17_mpniq")]
+transform = Transform3D(-1, 0, -8.74228e-08, 0, 1, 0, 8.74228e-08, 0, -1, 1.60394, 38, -1.71155)
+
+[node name="Box6" parent="." instance=ExtResource("17_mpniq")]
+transform = Transform3D(-0.707107, -0.707107, -3.09086e-08, 8.74228e-08, -4.37114e-08, -1, 0.707107, -0.707107, 9.27259e-08, 5.36185, 38.2565, -1.71155)
 
 [node name="BoxFloaty" parent="." instance=ExtResource("21_ld0as")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -10.751, 38.5739, -2.10743)
-size = 5.0

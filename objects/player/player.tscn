@@ -139,6 +139,7 @@ unique_name_in_owner = true
 
 [node name="Climb" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+visible = false
 script = ExtResource("4_2ehjw")
 
 [node name="ObstacleHeight" type="RayCast3D" parent="Climb"]
@@ -180,6 +181,7 @@ target_position = Vector3(0, 0, 0)
 debug_shape_custom_color = Color(0.562039, 0.0039935, 0.972096, 1)
 
 [node name="Legs" type="Node3D" parent="."]
+visible = false
 script = ExtResource("3_sof65")
 
 [node name="FloorCast" type="ShapeCast3D" parent="Legs"]
