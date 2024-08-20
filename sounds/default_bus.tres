@@ -1,10 +1,20 @@
-[gd_resource type="AudioBusLayout" format=3 uid="uid://j3hi70tklx5n"]
+[gd_resource type="AudioBusLayout" load_steps=2 format=3 uid="uid://j3hi70tklx5n"]
+
+[sub_resource type="AudioEffectSpectrumAnalyzer" id="AudioEffectSpectrumAnalyzer_eivm4"]
 
 [resource]
 bus/0/volume_db = -0.261596
+bus/0/effect/0/effect = SubResource("AudioEffectSpectrumAnalyzer_eivm4")
+bus/0/effect/0/enabled = true
 bus/1/name = &"Boxes and Stuff"
 bus/1/solo = false
 bus/1/mute = false
 bus/1/bypass_fx = false
 bus/1/volume_db = -17.0211
 bus/1/send = &"Master"
+bus/2/name = &"Music"
+bus/2/solo = false
+bus/2/mute = false
+bus/2/bypass_fx = false
+bus/2/volume_db = -4.41736
+bus/2/send = &"Master"

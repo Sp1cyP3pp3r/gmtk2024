@@ -1,4 +1,4 @@
-[gd_scene load_steps=36 format=3 uid="uid://c1n8xrti8afpc"]
+[gd_scene load_steps=37 format=3 uid="uid://c1n8xrti8afpc"]
 
 [ext_resource type="Script" path="res://objects/player/player.gd" id="1_oa43o"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_p4q1k"]
@@ -19,6 +19,7 @@
 [ext_resource type="Script" path="res://objects/player/StateMachine/Mantle.gd" id="18_433q2"]
 [ext_resource type="AudioStream" uid="uid://bcrk1blagrt36" path="res://sounds/player/climb3.mp3" id="18_qdrno"]
 [ext_resource type="AudioStream" uid="uid://bhx0cohadbokk" path="res://sounds/player/climb.wav" id="19_hp3ul"]
+[ext_resource type="AudioStream" uid="uid://cjxftjxp1sfwe" path="res://sounds/ANOna.mp3" id="20_42e8s"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oyfeb"]
 radius = 0.25
@@ -99,7 +100,7 @@ outline_color = Color(0, 0, 0, 1)
 
 [sub_resource type="Gradient" id="Gradient_3fvgk"]
 offsets = PackedFloat32Array(0, 0.421053)
-colors = PackedColorArray(0.0962046, 0.0962048, 0.0962047, 1, 0.0156863, 0, 0.0784314, 0)
+colors = PackedColorArray(0.0980392, 0.0980392, 0.0980392, 0.686275, 0.0156863, 0, 0.0784314, 0)
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_8rvhj"]
 gradient = SubResource("Gradient_3fvgk")
@@ -339,6 +340,20 @@ grow_vertical = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 texture = SubResource("GradientTexture2D_8rvhj")
+
+[node name="Death" type="ColorRect" parent="CanvasLayer"]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.682468, 0.315204, 0.588543, 1)
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_42e8s")
+autoplay = true
+bus = &"Music"
 
 [connection signal="shooted" from="Head/Camera/Gun" to="Head/Camera/ShakerComponent3D" method="play_shake"]
 [connection signal="update_ledge" from="Climb" to="FiniteStateMachine/Mantle" method="get_mantle_point"]

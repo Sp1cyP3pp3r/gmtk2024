@@ -45,6 +45,7 @@ func _on_body_entered(body: Node3D) -> void:
 	if body is Player:
 		var gun = body.gun
 		if gun.visible:
+			body.checkpoint = global_position
 			match pickup_type:
 				TYPE.Normal:
 					if gun.normal_box_ammo.value >= gun.normal_box_ammo.max_value:
@@ -69,12 +70,13 @@ func _on_body_entered(body: Node3D) -> void:
 					if gun.enlarge_bar.value >= gun.enlarge_bar.max_value:
 						return
 					else:
-						gun.enlarge_bar.value += 15
+						gun.enlarge_bar.value += 30
 				TYPE.Shrink:
 					if gun.shrink_bar.value >= gun.shrink_bar.max_value:
 						return
 					else:
-						gun.shrink_bar.value += 15
+						gun.shrink_bar.value += 30
+						
 			
 			$AudioStreamPlayer3D.play()
 			monitoring = false

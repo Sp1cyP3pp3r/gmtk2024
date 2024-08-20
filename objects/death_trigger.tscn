@@ -1,0 +1,10 @@
+[gd_scene load_steps=2 format=3 uid="uid://durptrrwodtgd"]
+
+[ext_resource type="Script" path="res://objects/death_trigger.gd" id="1_nk77x"]
+
+[node name="DeathTrigger" type="Area3D"]
+collision_layer = 0
+collision_mask = 14
+script = ExtResource("1_nk77x")
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]

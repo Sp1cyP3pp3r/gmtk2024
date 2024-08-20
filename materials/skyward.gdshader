@@ -18,7 +18,7 @@ void vertex() {
 }
 
 vec3 find_brightest(vec2 _uv) {
-	float brightest_value = 0.0; 
+	float brightest_value = 0.0;
 	vec3 brightest_color = vec3(0.0);
 
     vec3 sample_colors[7] = vec3[](
@@ -40,7 +40,7 @@ vec3 find_brightest(vec2 _uv) {
     }
     return brightest_color;
 }
- 
+
 void fragment() {
 	float depth        = texture(DEPTH_TEXTURE, SCREEN_UV).r;
 	depth              = PROJECTION_MATRIX[3][2] / (depth + PROJECTION_MATRIX[2][2]);
@@ -52,4 +52,3 @@ void fragment() {
 	// uncomment to see depth mask
 	//ALBEDO = modified_mask.rgb;
 }
- 

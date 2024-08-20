@@ -13,10 +13,34 @@ class_name Player
 
 @onready var state_machine = %FiniteStateMachine
 
+var checkpoint : Vector3
 var is_mantling : bool = false
 
-func _physics_process(delta):
-	if Input.is_key_pressed(KEY_R):
-		get_tree().reload_current_scene()
-		
-	%Label2.text = str($FiniteStateMachine.current_state.name)
+func _ready() -> void:
+	checkpoint = global_position
+
+#func _physics_process(delta):
+	#if Input.is_key_pressed(KEY_R):
+		#get_tree().reload_current_scene()
+		#
+	#%Label2.text = str($FiniteStateMachine.current_state.name)
+
+func death():
+	var array = [Color("80b3ff"), Color("ffb380"), Color("d35f8d")]
+	var death_s = $CanvasLayer/Death
+	var rand = randi_range(0, array.size() - 1)
+	death_s.color = array[rand]
+	death_s.color = Color(death_s.color, 0)
+	death_s.visible = true
+	var tween = create_tween()
+	tween.tween_property(death_s, "color", Color(death_s.color, 1), 1)
+	tween.play()
+	await tween.finished
+	global_position = checkpoint
+	tween.kill()
+	var tween2 = create_tween()
+	tween2.tween_property(death_s, "color", Color(death_s.color, 0), 0.5)
+	tween.play()
+	await tween2.finished
+	death_s.visible = false
+	tween2.kill()

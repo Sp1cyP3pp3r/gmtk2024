@@ -1,12 +1,12 @@
 extends Node3D
 
-var mouse_sensitivity = 0.15
+var mouse_sensitivity = 0.13
 
 @onready var head_free_space_cast = $HeadFreeSpaceCast
 @onready var camera : Camera3D = $Camera
 @onready var gun: Gun = $Camera/Gun
 @onready var cursor_point: Marker3D = %CursorPoint
-@export var fov :float= 75
+@export var fov : float= 75
 
 var do_rotate_owner : bool = true
 

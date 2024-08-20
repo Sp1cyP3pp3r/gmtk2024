@@ -1,0 +1,111 @@
+[gd_scene load_steps=5 format=3 uid="uid://daor8etqu88td"]
+
+[ext_resource type="Texture2D" uid="uid://yom5dj2bo1qh" path="res://hud/icon_normal.svg" id="1_anwlq"]
+[ext_resource type="Script" path="res://objects/main_menu.gd" id="1_dgt6w"]
+
+[sub_resource type="Gradient" id="Gradient_vpwsj"]
+colors = PackedColorArray(0.2, 0.745098, 0.764706, 1, 0.953432, 0.744864, 0.84322, 1)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_yxc71"]
+gradient = SubResource("Gradient_vpwsj")
+fill_from = Vector2(1, 1)
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_dgt6w")
+
+[node name="ColorRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_yxc71")
+
+[node name="HBoxContainer" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -54.0
+offset_top = -15.5
+offset_right = 54.0
+offset_bottom = 15.5
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+theme_override_constants/separation = 20
+
+[node name="Start" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Start
+"
+
+[node name="Quit" type="Button" parent="HBoxContainer"]
+layout_mode = 2
+text = "Quit"
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -68.0
+offset_top = -205.0
+offset_right = 68.0
+offset_bottom = -82.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("1_anwlq")
+
+[node name="CheckButton" type="CheckButton" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -63.5
+offset_top = 46.5
+offset_right = 63.5
+offset_bottom = 77.5
+grow_horizontal = 2
+grow_vertical = 2
+text = "Fullscreen"
+
+[node name="Label" type="Label" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -313.0
+offset_top = -227.0
+offset_right = 321.0
+offset_bottom = -48.0
+grow_horizontal = 2
+grow_vertical = 0
+text = "This game is made for GMTK 2024 game jam under 96 hours. No matter what, we persist.
+
+Thanks Nekita 'Dikoshi' for soundtrack and encourgment.
+Thanks Mark for sound design and endorsment.
+Thanks Anya, Vika, Kolya for emotial support and being good friends."
+horizontal_alignment = 1
+vertical_alignment = 1
+autowrap_mode = 3
+
+[connection signal="pressed" from="HBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]
