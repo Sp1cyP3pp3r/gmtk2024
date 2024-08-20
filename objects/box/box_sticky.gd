@@ -6,6 +6,7 @@ extends Box
 func _physics_process(delta: float) -> void:
 	super._physics_process(delta)
 	shape_cast.shape.size = collision_shape.size + Vector3(0.5, 0.5, 0.5)
+	$MeshInstance3D2.mesh.size = $MeshInstance3D.mesh.size + Vector3(0.001, 0.001, 0.001)
 	
 	if shape_cast.is_colliding():
 		var normal = shape_cast.get_collision_normal(0)

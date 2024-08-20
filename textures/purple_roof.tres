@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://nniv7ssvd7a6"]
+
+[ext_resource type="Texture2D" uid="uid://fh6qyes80eim" path="res://textures/purple_roof.jpg" id="1_hgiad"]
+
+[resource]
+albedo_texture = ExtResource("1_hgiad")
+metallic_specular = 0.0
+texture_filter = 2

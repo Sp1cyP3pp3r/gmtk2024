@@ -1,0 +1,179 @@
+[gd_scene load_steps=16 format=3 uid="uid://cv5swai6mwef4"]
+
+[ext_resource type="Script" path="res://objects/pick up/pick_up.gd" id="1_56utb"]
+[ext_resource type="AudioStream" uid="uid://dogx3gt4nlf67" path="res://sounds/pick.wav" id="2_teoqi"]
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_4wsr5"]
+radius = 1.0
+
+[sub_resource type="Curve" id="Curve_5b7ju"]
+min_value = -200.0
+max_value = 200.0
+_data = [Vector2(0, 0.75473), 0.0, 0.0, 0, 0, Vector2(0.506369, -35.4717), 0.0, 0.0, 0, 0, Vector2(1, -5.28302), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_nuhyl"]
+curve = SubResource("Curve_5b7ju")
+
+[sub_resource type="Curve" id="Curve_5tycs"]
+_data = [Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(0.143312, 0.54717), 2.49454, 2.49454, 0, 0, Vector2(0.417197, 0.30566), -1.77736, -1.77736, 0, 0, Vector2(1, 0), -0.181472, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_4t2n3"]
+curve = SubResource("Curve_5tycs")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_r17ag"]
+lifetime_randomness = 0.25
+particle_flag_align_y = true
+emission_shape = 1
+emission_sphere_radius = 2.0
+direction = Vector3(0, 0, 0)
+initial_velocity_min = 0.5
+initial_velocity_max = 1.5
+gravity = Vector3(0, 0, 0)
+radial_accel_min = -2.23517e-06
+radial_accel_max = 2.0
+radial_accel_curve = SubResource("CurveTexture_nuhyl")
+scale_min = 0.5
+scale_max = 0.8
+scale_curve = SubResource("CurveTexture_4t2n3")
+scale_over_velocity_min = 62.39
+scale_over_velocity_max = 228.32
+collision_mode = 2
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_qw8d3"]
+resource_local_to_scene = true
+shading_mode = 0
+
+[sub_resource type="BoxMesh" id="BoxMesh_6i7yk"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_qw8d3")
+
+[sub_resource type="PlaceholderTexture2D" id="PlaceholderTexture2D_wyote"]
+size = Vector2(64, 64)
+
+[sub_resource type="Animation" id="Animation_bc45x"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_87i1u"]
+resource_name = "appear"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.733333, 0.933333, 1),
+"transitions": PackedFloat32Array(0.378929, 0.366021, 2.07053, 2.2974),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0.8, 0.8, 0.8), Vector3(0.7, 0.7, 0.7), Vector3(1, 1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 1),
+"transitions": PackedFloat32Array(1.93187, 0.574349),
+"update": 0,
+"values": [Vector3(1.5708, 1.5708, 1.5708), Vector3(0, 0, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_v8xr5"]
+resource_name = "disappear"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Sprite3D:scale")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(0.732043, 0.420448),
+"update": 0,
+"values": [Vector3(1, 1, 1), Vector3(0, 0, 0)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Sprite3D:rotation")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(1, 1.93187),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(1.5708, 1.5708, 1.5708)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_hu2p8"]
+_data = {
+"RESET": SubResource("Animation_bc45x"),
+"appear": SubResource("Animation_87i1u"),
+"disappear": SubResource("Animation_v8xr5")
+}
+
+[node name="PickUp" type="Area3D"]
+collision_layer = 0
+collision_mask = 2
+script = ExtResource("1_56utb")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+shape = SubResource("SphereShape3D_4wsr5")
+
+[node name="GPUParticles3D" type="GPUParticles3D" parent="."]
+lifetime = 2.0
+speed_scale = 0.5
+explosiveness = 0.25
+randomness = 0.43
+visibility_aabb = AABB(-1.5, -1.5, -1.5, 3, 3, 3)
+process_material = SubResource("ParticleProcessMaterial_r17ag")
+draw_pass_1 = SubResource("BoxMesh_6i7yk")
+
+[node name="Sprite3D" type="Sprite3D" parent="."]
+billboard = 1
+texture = SubResource("PlaceholderTexture2D_wyote")
+
+[node name="Timer" type="Timer" parent="."]
+process_callback = 0
+one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+"": SubResource("AnimationLibrary_hu2p8")
+}
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = ExtResource("2_teoqi")
+volume_db = -30.0
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
+[connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

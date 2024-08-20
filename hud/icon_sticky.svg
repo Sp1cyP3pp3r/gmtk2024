@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="10.725556mm"
+   height="11.110588mm"
+   viewBox="0 0 10.725556 11.110588"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="куб.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.0173541"
+     inkscape:cx="-104.19184"
+     inkscape:cy="206.90928"
+     inkscape:window-width="1297"
+     inkscape:window-height="745"
+     inkscape:window-x="55"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-160.23485,-7.757602)">
+    <path
+       id="rect24"
+       style="fill:#d35f8d;stroke:#ffffff;stroke-width:0.6;stroke-miterlimit:2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       d="m 164.76014,7.9714977 -3.52216,3.4638303 -0.71563,2.40059 4.11876,-2.718329 z m 1.67453,0 0.11951,3.1460913 4.11876,2.718329 -0.71611,-2.40059 z m -0.78913,4.7371583 -5.12319,2.521046 5.07529,3.28125 5.0753,-3.28125 z m -0.0142,0.852205 3.54968,1.781236 -3.58335,2.316649 -3.58334,-2.316649 z"
+       inkscape:export-filename="Godot\gmtk2024\hud\icon_sticky.svg"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+  </g>
+</svg>

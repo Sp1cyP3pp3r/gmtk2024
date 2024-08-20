@@ -1,0 +1,8 @@
+[gd_resource type="StandardMaterial3D" load_steps=2 format=3 uid="uid://d23b54mujk8ao"]
+
+[ext_resource type="Texture2D" uid="uid://dot2e64jealu2" path="res://textures/tueqoise_roof.jpg" id="1_wrkvo"]
+
+[resource]
+albedo_texture = ExtResource("1_wrkvo")
+metallic_specular = 0.0
+texture_filter = 2

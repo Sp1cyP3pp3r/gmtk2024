@@ -1,0 +1,50 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="18.70586mm"
+   height="5.081368mm"
+   viewBox="0 0 18.70586 5.081368"
+   version="1.1"
+   id="svg1"
+   inkscape:version="1.3.2 (091e20e, 2023-11-25, custom)"
+   sodipodi:docname="куб.svg"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="mm"
+     inkscape:zoom="1.0173541"
+     inkscape:cx="-104.19184"
+     inkscape:cy="206.90928"
+     inkscape:window-width="1297"
+     inkscape:window-height="745"
+     inkscape:window-x="55"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Слой 1"
+     inkscape:groupmode="layer"
+     id="layer1"
+     transform="translate(-15.158671,-22.297851)">
+    <path
+       id="rect4"
+       style="fill:#ffb380;stroke:#ffffff;stroke-width:0.4;stroke-miterlimit:1.2;stroke-dasharray:none;stroke-opacity:1;paint-order:markers stroke fill"
+       d="m 15.7757,22.497852 c -0.231097,0 -0.417029,0.185932 -0.417029,0.417028 v 3.847311 c 0,0.231096 0.185932,0.417029 0.417029,0.417029 h 2.192114 c 0.231096,0 0.417029,-0.185933 0.417029,-0.417029 V 22.91488 c 0,-0.231096 -0.185933,-0.417028 -0.417029,-0.417028 z m 3.819921,0 c -0.231096,0 -0.417028,0.185932 -0.417028,0.417028 v 3.847311 c 0,0.231096 0.185932,0.417029 0.417028,0.417029 h 2.192115 c 0.231096,0 0.417029,-0.185933 0.417029,-0.417029 V 22.91488 c 0,-0.231096 -0.185933,-0.417028 -0.417029,-0.417028 z m 3.819922,0 c -0.231096,0 -0.417028,0.185932 -0.417028,0.417028 v 3.847311 c 0,0.231096 0.185932,0.417029 0.417028,0.417029 h 2.192115 c 0.231096,0 0.417028,-0.185933 0.417028,-0.417029 V 22.91488 c 0,-0.231096 -0.185932,-0.417028 -0.417028,-0.417028 z m 3.819922,0 c -0.231096,0 -0.417029,0.185932 -0.417029,0.417028 v 3.847311 c 0,0.231096 0.185933,0.417029 0.417029,0.417029 h 2.192114 c 0.231097,0 0.417029,-0.185933 0.417029,-0.417029 V 22.91488 c 0,-0.231096 -0.185932,-0.417028 -0.417029,-0.417028 z m 3.819922,0 c -0.231096,0 -0.417029,0.185932 -0.417029,0.417028 v 3.847311 c 0,0.231096 0.185933,0.417029 0.417029,0.417029 h 2.192114 c 0.231097,0 0.417029,-0.185933 0.417029,-0.417029 V 22.91488 c 0,-0.231096 -0.185932,-0.417028 -0.417029,-0.417028 z"
+       inkscape:export-filename="Godot\gmtk2024\hud\ammo_normal.svg"
+       inkscape:export-xdpi="300"
+       inkscape:export-ydpi="300" />
+  </g>
+</svg>

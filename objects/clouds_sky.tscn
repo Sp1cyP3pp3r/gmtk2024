@@ -1,0 +1,64 @@
+[gd_scene load_steps=13 format=3 uid="uid://qb6i6qord7ty"]
+
+[ext_resource type="Shader" path="res://materials/clouds_sky1.gdshader" id="1_yp6k1"]
+[ext_resource type="Shader" path="res://materials/clouds_sky2.gdshader" id="2_da6dw"]
+
+[sub_resource type="Gradient" id="Gradient_8cv2n"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_7enoy"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_eqs6w"]
+color_ramp = SubResource("Gradient_8cv2n")
+noise = SubResource("FastNoiseLite_7enoy")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_mfplf"]
+render_priority = 0
+shader = ExtResource("1_yp6k1")
+shader_parameter/timeScale1 = 0.005
+shader_parameter/timeScale2 = 0.01
+shader_parameter/cloud1worldScale = 0.005
+shader_parameter/cloud2worldScale = 0.01
+shader_parameter/displacementStrength = 17.885
+shader_parameter/discardHeight = 704.0
+shader_parameter/Noise1 = SubResource("NoiseTexture2D_eqs6w")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_n57uv"]
+material = SubResource("ShaderMaterial_mfplf")
+size = Vector2(500, 500)
+subdivide_width = 23
+subdivide_depth = 22
+
+[sub_resource type="Gradient" id="Gradient_ukwu8"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_uwvv4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_b5yug"]
+color_ramp = SubResource("Gradient_ukwu8")
+noise = SubResource("FastNoiseLite_uwvv4")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_lw76o"]
+render_priority = 0
+shader = ExtResource("2_da6dw")
+shader_parameter/timeScale1 = 0.005
+shader_parameter/timeScale2 = 0.01
+shader_parameter/cloud1worldScale = 0.005
+shader_parameter/cloud2worldScale = 0.01
+shader_parameter/displacementStrength = 7.02
+shader_parameter/discardHeight = 701.0
+shader_parameter/Noise1 = SubResource("NoiseTexture2D_b5yug")
+
+[sub_resource type="PlaneMesh" id="PlaneMesh_13kkk"]
+material = SubResource("ShaderMaterial_lw76o")
+size = Vector2(500, 500)
+subdivide_width = 27
+subdivide_depth = 27
+
+[node name="CloudsSky" type="Node3D"]
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 400, 0)
+mesh = SubResource("PlaneMesh_n57uv")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 400, 0)
+mesh = SubResource("PlaneMesh_13kkk")

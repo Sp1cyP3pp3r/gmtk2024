@@ -1,4 +1,4 @@
-[gd_resource type="Resource" script_class="FuncGodotFGDFile" load_steps=7 format=3 uid="uid://crgpdahjaj"]
+[gd_resource type="Resource" script_class="FuncGodotFGDFile" load_steps=18 format=3 uid="uid://crgpdahjaj"]
 
 [ext_resource type="Script" path="res://addons/func_godot/src/fgd/func_godot_fgd_file.gd" id="1_axt3h"]
 [ext_resource type="Resource" uid="uid://nayxb8n7see2" path="res://addons/func_godot/fgd/phong_base.tres" id="1_ehab8"]
@@ -6,6 +6,144 @@
 [ext_resource type="Resource" uid="uid://cxy7jnh6d7msn" path="res://addons/func_godot/fgd/func_detail.tres" id="3_fqfww"]
 [ext_resource type="Resource" uid="uid://dg5x44cc7flew" path="res://addons/func_godot/fgd/func_illusionary.tres" id="4_c4ucw"]
 [ext_resource type="Resource" uid="uid://ch3e0dix85uhb" path="res://addons/func_godot/fgd/func_detail_illusionary.tres" id="5_b2q3p"]
+[ext_resource type="Script" path="res://addons/func_godot/src/fgd/func_godot_fgd_solid_class.gd" id="6_wgn8t"]
+[ext_resource type="PackedScene" uid="uid://c1n8xrti8afpc" path="res://objects/player/player.tscn" id="7_ndiw8"]
+[ext_resource type="Script" path="res://addons/func_godot/src/fgd/func_godot_fgd_point_class.gd" id="8_bp77i"]
+[ext_resource type="PackedScene" uid="uid://cv5swai6mwef4" path="res://objects/pick up/pick_up.tscn" id="9_oddgn"]
+[ext_resource type="PackedScene" uid="uid://dyw4v3yqgtgsi" path="res://objects/pick up/pick_up_gun.tscn" id="10_he30h"]
+
+[sub_resource type="Resource" id="Resource_ympwb"]
+script = ExtResource("6_wgn8t")
+spawn_type = 2
+origin_type = 0
+build_visuals = true
+use_in_baked_light = true
+shadow_casting_setting = 1
+build_occlusion = false
+render_layers = 1
+collision_shape_type = 1
+collision_layer = 33
+collision_mask = 0
+collision_priority = 2.0
+collision_shape_margin = 0.04
+classname = "func_fence"
+description = "Solid fence which doesn't allow mantling or placing boxes"
+func_godot_internal = false
+base_classes = Array[Resource]([ExtResource("1_ehab8")])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1)
+}
+node_class = "StaticBody3D"
+name_property = ""
+
+[sub_resource type="Resource" id="Resource_xdtms"]
+script = ExtResource("8_bp77i")
+scene_file = ExtResource("7_ndiw8")
+apply_rotation_on_map_build = true
+classname = "info_func_player"
+description = "Player!"
+func_godot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+name_property = ""
+
+[sub_resource type="Resource" id="Resource_lm7nx"]
+script = ExtResource("8_bp77i")
+scene_file = ExtResource("9_oddgn")
+apply_rotation_on_map_build = true
+classname = "info_func_pickup"
+description = ""
+func_godot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {
+"pickup_type": 0
+}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+name_property = ""
+
+[sub_resource type="Resource" id="Resource_tus01"]
+script = ExtResource("8_bp77i")
+scene_file = ExtResource("10_he30h")
+apply_rotation_on_map_build = true
+classname = "info_func_gun"
+description = ""
+func_godot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = ""
+name_property = ""
+
+[sub_resource type="Resource" id="Resource_kohsp"]
+script = ExtResource("6_wgn8t")
+spawn_type = 2
+origin_type = 0
+build_visuals = false
+use_in_baked_light = false
+shadow_casting_setting = 0
+build_occlusion = false
+render_layers = 1
+collision_shape_type = 1
+collision_layer = 1
+collision_mask = 0
+collision_priority = 1.0
+collision_shape_margin = 0.04
+classname = "func_border"
+description = ""
+func_godot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "StaticBody3D"
+name_property = ""
+
+[sub_resource type="Resource" id="Resource_8b76k"]
+script = ExtResource("6_wgn8t")
+spawn_type = 2
+origin_type = 0
+build_visuals = false
+use_in_baked_light = false
+shadow_casting_setting = 1
+build_occlusion = false
+render_layers = 1
+collision_shape_type = 1
+collision_layer = 0
+collision_mask = 2
+collision_priority = 1.0
+collision_shape_margin = 0.04
+classname = "func_death_trigger"
+description = ""
+func_godot_internal = false
+base_classes = Array[Resource]([])
+class_properties = {}
+class_property_descriptions = {}
+meta_properties = {
+"color": Color(0.8, 0.8, 0.8, 1),
+"size": AABB(-8, -8, -8, 8, 8, 8)
+}
+node_class = "Area3D"
+name_property = ""
 
 [resource]
 script = ExtResource("1_axt3h")
@@ -13,4 +151,4 @@ export_file = false
 model_key_word_supported = true
 fgd_name = "FuncGodot"
 base_fgd_files = Array[Resource]([])
-entity_definitions = Array[Resource]([ExtResource("1_ehab8"), ExtResource("2_ri2rx"), ExtResource("3_fqfww"), ExtResource("5_b2q3p"), ExtResource("4_c4ucw")])
+entity_definitions = Array[Resource]([ExtResource("1_ehab8"), ExtResource("2_ri2rx"), ExtResource("3_fqfww"), ExtResource("5_b2q3p"), ExtResource("4_c4ucw"), SubResource("Resource_ympwb"), SubResource("Resource_xdtms"), SubResource("Resource_lm7nx"), SubResource("Resource_tus01"), SubResource("Resource_kohsp"), SubResource("Resource_8b76k")])

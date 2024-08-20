@@ -1,5 +1,7 @@
 extends PlayerState
 
+@export var audio_array : Array[AudioStream]
+
 var mantle_point : Vector3
 var crouch : bool
 
@@ -10,6 +12,11 @@ signal gun_up
 func on_enter():
 	player.is_mantling = true
 	if mantle_point != Vector3.ZERO:
+		var size = audio_array.size()
+		var i = randi_range(0, size - 1)
+		$AudioStreamPlayer.stream = audio_array[i]
+		$AudioStreamPlayer.play()
+		
 		player.velocity = Vector3.ZERO
 		player.head.do_rotate_owner = false
 		body_tween()

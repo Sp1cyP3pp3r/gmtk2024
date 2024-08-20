@@ -5,7 +5,9 @@
 [ext_resource type="PackedScene" uid="uid://bwk6kmpurm4qq" path="res://objects/box/box.tscn" id="2_pguos"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x2vvx"]
-bounce = 0.6
+rough = true
+bounce = 1.0
+absorbent = true
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_37d6n"]
 resource_name = "yellow"
@@ -45,15 +47,17 @@ blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_1db38")
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_xd0oa"]
-height = 0.42651
-radius = 0.0851369
+margin = 0.01
+height = 0.819365
+radius = 0.136143
 
 [node name="Bullet" type="RigidBody3D"]
 collision_layer = 4
-collision_mask = 9
+collision_mask = 16
 collision_priority = 2.0
 mass = 0.1
 physics_material_override = SubResource("PhysicsMaterial_x2vvx")
+can_sleep = false
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_kiiik")

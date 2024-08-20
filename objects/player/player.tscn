@@ -1,4 +1,4 @@
-[gd_scene load_steps=29 format=3 uid="uid://c1n8xrti8afpc"]
+[gd_scene load_steps=36 format=3 uid="uid://c1n8xrti8afpc"]
 
 [ext_resource type="Script" path="res://objects/player/player.gd" id="1_oa43o"]
 [ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_p4q1k"]
@@ -14,28 +14,32 @@
 [ext_resource type="Script" path="res://objects/player/StateMachine/Jump.gd" id="8_856fg"]
 [ext_resource type="Script" path="res://objects/player/StateMachine/Crouch.gd" id="9_84rn1"]
 [ext_resource type="PackedScene" uid="uid://cebrbw00uf83n" path="res://objects/gun/gun.tscn" id="12_8okjr"]
+[ext_resource type="AudioStream" uid="uid://4ikho6fwf81l" path="res://sounds/player/jump.wav" id="14_eytpl"]
+[ext_resource type="AudioStream" uid="uid://c72rdyalv5hl0" path="res://sounds/player/climb2.wav" id="17_udwbx"]
 [ext_resource type="Script" path="res://objects/player/StateMachine/Mantle.gd" id="18_433q2"]
+[ext_resource type="AudioStream" uid="uid://bcrk1blagrt36" path="res://sounds/player/climb3.mp3" id="18_qdrno"]
+[ext_resource type="AudioStream" uid="uid://bhx0cohadbokk" path="res://sounds/player/climb.wav" id="19_hp3ul"]
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oyfeb"]
 radius = 0.25
 height = 1.9
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_p17bk"]
-radius = 0.2
-height = 0.5
+radius = 0.251232
+height = 0.517063
 
 [sub_resource type="CylinderShape3D" id="CylinderShape3D_rdl2t"]
 height = 0.1
 radius = 0.2
 
-[sub_resource type="ShaderMaterial" id="ShaderMaterial_tm6mg"]
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_v0brf"]
 render_priority = 0
 shader = ExtResource("4_pe4gi")
-shader_parameter/outlineColor = Color(0.935198, 0.927595, 0.929488, 1)
+shader_parameter/outlineColor = Color(1, 1, 1, 1)
 shader_parameter/depth_threshold = 0.025
 shader_parameter/normal_threshold = 0.5
-shader_parameter/normal_smoothing = 0.087
-shader_parameter/max_thickness = 2.0
+shader_parameter/normal_smoothing = 0.25
+shader_parameter/max_thickness = 1.5
 shader_parameter/min_thickness = 0.5
 shader_parameter/max_distance = 75.0
 shader_parameter/min_distance = 2.0
@@ -44,12 +48,27 @@ shader_parameter/grazing_angle_mask_power = 1.0
 shader_parameter/grazing_angle_modulation_factor = 50.0
 
 [sub_resource type="QuadMesh" id="QuadMesh_hdmj0"]
-material = SubResource("ShaderMaterial_tm6mg")
+material = SubResource("ShaderMaterial_v0brf")
 flip_faces = true
 size = Vector2(2, 2)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_pdxqs"]
 radius = 0.01
+
+[sub_resource type="GDScript" id="GDScript_fj0bi"]
+script/source = "extends SubViewport
+
+func _ready() -> void:
+	get_tree().root.get_viewport().size_changed.connect(Callable(self, \"update_size\"))
+	size = get_tree().root.get_viewport().size
+
+func _physics_process(delta: float) -> void:
+	#$Camera3D.global_transform =%Camera.global_transform
+	$Camera3D.fov = %Camera.fov
+	
+func update_size():
+	size = get_tree().root.get_viewport().size
+"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ckefi"]
 size = Vector3(0.4, 1.6, 0.3)
@@ -78,13 +97,22 @@ font_size = 34
 outline_size = 3
 outline_color = Color(0, 0, 0, 1)
 
-[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("legs", "head", "climb")]
+[sub_resource type="Gradient" id="Gradient_3fvgk"]
+offsets = PackedFloat32Array(0, 0.421053)
+colors = PackedColorArray(0.0962046, 0.0962048, 0.0962047, 1, 0.0156863, 0, 0.0784314, 0)
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_8rvhj"]
+gradient = SubResource("Gradient_3fvgk")
+fill_from = Vector2(1, 1)
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("legs", "head", "climb", "gun")]
 collision_layer = 2
 collision_mask = 9
 script = ExtResource("1_oa43o")
 legs = NodePath("Legs")
 head = NodePath("Head")
 climb = NodePath("Climb")
+gun = NodePath("Head/Camera/Gun")
 gravity = 17.0
 jump_power = 6.21
 
@@ -111,13 +139,16 @@ target_position = Vector3(0, 0.45, 0)
 
 [node name="Camera" type="Camera3D" parent="Head"]
 unique_name_in_owner = true
-transform = Transform3D(1, -2.98024e-08, -7.91442e-09, 2.98024e-08, 1, 6.75203e-09, 7.91442e-09, -6.75203e-09, 1, -7.59028e-08, 2.69152e-07, 2.5332e-07)
+transform = Transform3D(1, -2.98024e-08, -7.91442e-09, 2.98024e-08, 1, 6.75203e-09, 7.91442e-09, -6.75203e-09, 1, -7.59028e-08, 2.38419e-07, 2.5332e-07)
+cull_mask = 1048573
 
 [node name="Gun" parent="Head/Camera" instance=ExtResource("12_8okjr")]
-transform = Transform3D(0.986714, -7.01021e-10, 0.162465, 1.49291e-09, 1, -4.75214e-09, -0.162465, 4.93155e-09, 0.986714, 0.303351, -0.216227, -0.370363)
+transform = Transform3D(0.986714, -7.01021e-10, 0.162465, 1.49291e-09, 1, -4.75214e-09, -0.162465, 4.93155e-09, 0.986714, 0.232433, -0.216227, -0.370363)
+visible = false
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Head/Camera"]
+[node name="Outline" type="MeshInstance3D" parent="Head/Camera"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -0.144857)
+cast_shadow = 0
 mesh = SubResource("QuadMesh_hdmj0")
 
 [node name="ShakerComponent3D" type="Node3D" parent="Head/Camera"]
@@ -130,37 +161,61 @@ shakerPreset = ExtResource("6_wrkh5")
 
 [node name="SpringArm3D" type="SpringArm3D" parent="Head/Camera"]
 transform = Transform3D(1, -5.96048e-08, -1.58288e-08, -5.96048e-08, -1, -8.74228e-08, -1.58288e-08, 8.74228e-08, -1, -1.6198e-09, 0, -0.204664)
-collision_mask = 9
+collision_mask = 16
 shape = SubResource("SphereShape3D_pdxqs")
 spring_length = 25.0
 
 [node name="CursorPoint" type="Marker3D" parent="Head/Camera/SpringArm3D"]
 unique_name_in_owner = true
 
+[node name="SubViewportContainer" type="SubViewportContainer" parent="Head/Camera"]
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="SubViewport" type="SubViewport" parent="Head/Camera/SubViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+render_target_update_mode = 4
+script = SubResource("GDScript_fj0bi")
+
+[node name="Camera3D" type="Camera3D" parent="Head/Camera/SubViewportContainer/SubViewport"]
+transform = Transform3D(1, -2.98024e-08, -7.91442e-09, 2.98024e-08, 1, 6.75203e-09, 7.91442e-09, -6.75203e-09, 1, -7.59028e-08, 1.5, 2.5332e-07)
+cull_mask = 2
+fov = 90.0
+
+[node name="RemoteTransform3D" type="RemoteTransform3D" parent="Head/Camera"]
+remote_path = NodePath("../SubViewportContainer/SubViewport/Camera3D")
+
 [node name="Climb" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
-visible = false
 script = ExtResource("4_2ehjw")
 
 [node name="ObstacleHeight" type="RayCast3D" parent="Climb"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.851986, -0.365159)
 target_position = Vector3(0, -2, 0)
+collision_mask = 64
 hit_back_faces = false
 debug_shape_custom_color = Color(0.271951, 0.866286, 1, 1)
 
 [node name="ObstacleObstr" type="RayCast3D" parent="Climb"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162644, -0.291806)
 target_position = Vector3(0, 0, -0.7)
+collision_mask = 65
 debug_shape_custom_color = Color(0.271951, 0.866286, 1, 1)
 
 [node name="ObstacleDetector" type="ShapeCast3D" parent="Climb"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162644, -0.248098)
 shape = SubResource("BoxShape3D_ckefi")
 target_position = Vector3(0, 0, -0.25)
+collision_mask = 65
 debug_shape_custom_color = Color(0.271951, 0.866286, 1, 1)
 
 [node name="HeightSpringArm" type="SpringArm3D" parent="Climb"]
 transform = Transform3D(1, -4.37114e-08, 4.37114e-08, 4.37114e-08, -4.37114e-08, -1, 4.37114e-08, 1, -4.37114e-08, 0, 1.26916, -0.412127)
+collision_mask = 65
 shape = SubResource("SphereShape3D_eue55")
 spring_length = 2.25
 
@@ -181,7 +236,6 @@ target_position = Vector3(0, 0, 0)
 debug_shape_custom_color = Color(0.562039, 0.0039935, 0.972096, 1)
 
 [node name="Legs" type="Node3D" parent="."]
-visible = false
 script = ExtResource("3_sof65")
 
 [node name="FloorCast" type="ShapeCast3D" parent="Legs"]
@@ -242,7 +296,11 @@ one_shot = true
 
 [node name="Jump" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("8_856fg")
+audio_array = Array[AudioStream]([ExtResource("14_eytpl")])
 can_jump_in_this_state = false
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="FiniteStateMachine/Jump"]
+volume_db = 5.0
 
 [node name="Crouch" type="Node" parent="FiniteStateMachine"]
 script = ExtResource("9_84rn1")
@@ -252,12 +310,16 @@ can_crouch_in_this_state = false
 [node name="Mantle" type="Node" parent="FiniteStateMachine"]
 unique_name_in_owner = true
 script = ExtResource("18_433q2")
+audio_array = Array[AudioStream]([ExtResource("17_udwbx"), ExtResource("18_qdrno"), ExtResource("19_hp3ul")])
+
+[node name="AudioStreamPlayer" type="AudioStreamPlayer" parent="FiniteStateMachine/Mantle"]
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
 unique_name_in_owner = true
+visible = false
 offset_left = 77.0
 offset_top = 505.0
 offset_right = 216.0
@@ -266,8 +328,19 @@ text = "NTRCN TRNMCG"
 label_settings = SubResource("LabelSettings_mm6q2")
 horizontal_alignment = 2
 
+[node name="CrouchVinette" type="TextureRect" parent="CanvasLayer"]
+unique_name_in_owner = true
+modulate = Color(1, 1, 1, 0)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
+texture = SubResource("GradientTexture2D_8rvhj")
+
 [connection signal="shooted" from="Head/Camera/Gun" to="Head/Camera/ShakerComponent3D" method="play_shake"]
-[connection signal="update_ledge" from="Climb" to="Climb" method="has_free_way"]
 [connection signal="update_ledge" from="Climb" to="FiniteStateMachine/Mantle" method="get_mantle_point"]
 [connection signal="timeout" from="FiniteStateMachine/Air/CoyoteTimer" to="FiniteStateMachine/Air" method="coyote_disable_jump"]
 [connection signal="gun_down" from="FiniteStateMachine/Mantle" to="Head/Camera/Gun" method="mantle_start"]

@@ -1,7 +1,13 @@
-[gd_scene load_steps=11 format=3 uid="uid://cfy6qqmef8ymf"]
+[gd_scene load_steps=18 format=3 uid="uid://cfy6qqmef8ymf"]
 
 [ext_resource type="Script" path="res://objects/box/box_floaty.gd" id="1_mps03"]
-[ext_resource type="Texture2D" uid="uid://dx15qt3ms7gau" path="res://textures/paper.jpg" id="2_v1mfr"]
+[ext_resource type="AudioStream" uid="uid://dfxrg3gw6jl4e" path="res://sounds/boxes/normal/1.mp3" id="2_1tsgx"]
+[ext_resource type="Texture2D" uid="uid://v6eo347n2qmx" path="res://textures/clouds2.jpg" id="2_riggf"]
+[ext_resource type="AudioStream" uid="uid://cmw8shyvkkec6" path="res://sounds/boxes/normal/2.mp3" id="3_lvkbl"]
+[ext_resource type="AudioStream" uid="uid://omaf4a7nw20k" path="res://sounds/boxes/normal/3.mp3" id="4_7ntnm"]
+[ext_resource type="AudioStream" uid="uid://bjrt8et0mjb0l" path="res://sounds/boxes/normal/6.mp3" id="6_3pdke"]
+[ext_resource type="AudioStream" uid="uid://blcaorcn2n58h" path="res://sounds/boxes/normal/8.mp3" id="7_8d5j1"]
+[ext_resource type="AudioStream" uid="uid://ukgmkfj2n1u0" path="res://sounds/boxes/normal/9.mp3" id="8_k1seo"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_qtly5"]
 friction = 0.55
@@ -12,15 +18,16 @@ absorbent = true
 _data = [Vector2(0, 0.441509), 0.0, 0.0, 0, 0, Vector2(0.31117, 0.879245), 0.0, 0.0, 0, 0, Vector2(0.587766, 0.864151), 0.0, 0.0, 0, 0, Vector2(1, 0.366038), 0.0, 0.0, 0, 0]
 point_count = 4
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vpc17"]
-resource_local_to_scene = true
-albedo_color = Color(0.369687, 0.85037, 0.905101, 1)
-albedo_texture = ExtResource("2_v1mfr")
-grow = true
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_alvx7"]
+albedo_texture = ExtResource("2_riggf")
+uv1_scale = Vector3(0.5, 0.5, 0.5)
+uv1_offset = Vector3(0.5, 0.5, 0.5)
+uv1_triplanar = true
 
 [sub_resource type="BoxMesh" id="BoxMesh_dugb5"]
 resource_local_to_scene = true
-material = SubResource("StandardMaterial3D_vpc17")
+lightmap_size_hint = Vector2i(14, 21)
+material = SubResource("StandardMaterial3D_alvx7")
 
 [sub_resource type="Animation" id="Animation_wu5f4"]
 length = 0.001
@@ -111,18 +118,24 @@ _data = {
 [sub_resource type="BoxShape3D" id="BoxShape3D_reqmu"]
 resource_local_to_scene = true
 
+[sub_resource type="AudioStream" id="AudioStream_qp140"]
+resource_local_to_scene = true
+
 [node name="BoxFloaty" type="RigidBody3D"]
 collision_layer = 8
 collision_mask = 9
 mass = 1.5
 physics_material_override = SubResource("PhysicsMaterial_qtly5")
 gravity_scale = 0.1
+contact_monitor = true
+max_contacts_reported = 1
 constant_torque = Vector3(0, 0.01, 0)
 script = ExtResource("1_mps03")
 float_curve = SubResource("Curve_lihv4")
 float_power = 2.0
-coll_grounded = 9
-coll_fall = 8
+audio_array = Array[AudioStream]([ExtResource("2_1tsgx"), ExtResource("3_lvkbl"), ExtResource("4_7ntnm"), ExtResource("6_3pdke"), ExtResource("7_8d5j1"), ExtResource("8_k1seo")])
+coll_grounded = 121
+coll_fall = 57
 
 [node name="MeshInstance3D" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_dugb5")
@@ -134,3 +147,9 @@ libraries = {
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_reqmu")
+
+[node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
+stream = SubResource("AudioStream_qp140")
+bus = &"Boxes and Stuff"
+
+[connection signal="body_entered" from="." to="." method="_on_body_entered"]
