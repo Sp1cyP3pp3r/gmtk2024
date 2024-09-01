@@ -3,10 +3,6 @@
 [ext_resource type="Texture2D" uid="uid://cmw0n5fsomxvf" path="res://textures/fence.png" id="1_4whx1"]
 
 [resource]
-transparency = 3
-alpha_hash_scale = 1.0
-alpha_antialiasing_mode = 1
-alpha_antialiasing_edge = 0.2
 albedo_texture = ExtResource("1_4whx1")
 proximity_fade_enabled = true
 proximity_fade_distance = 0.01

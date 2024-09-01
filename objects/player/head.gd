@@ -16,12 +16,13 @@ func _ready():
 	initial_sens = mouse_sensitivity
 
 func _unhandled_input(event):
-	if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
-		if do_rotate_owner:
-			owner.rotation_degrees.y -= event.relative.x * mouse_sensitivity
-		else:
-			camera.rotation_degrees.y -= event.relative.x * mouse_sensitivity
-		camera.rotation_degrees.x -= event.relative.y * mouse_sensitivity
+	if is_multiplayer_authority():
+		if event is InputEventMouseMotion and Input.mouse_mode == Input.MOUSE_MODE_CAPTURED:
+			if do_rotate_owner:
+				owner.rotation_degrees.y -= event.relative.x * mouse_sensitivity
+			else:
+				camera.rotation_degrees.y -= event.relative.x * mouse_sensitivity
+			camera.rotation_degrees.x -= event.relative.y * mouse_sensitivity
 
 var zoomed : bool = false
 var initial_sens
@@ -32,10 +33,11 @@ func _physics_process(delta):
 	var time = delta * 30
 	gun.look_at(lerp(from, cursor_point.global_position, time))
 	
-	if Input.is_action_just_pressed("zoom_in") and not zoomed:
-		zoomed = true
-	if Input.is_action_just_pressed("zoom_out"):
-		zoomed = false
+	if is_multiplayer_authority():
+		if Input.is_action_just_pressed("zoom_in") and not zoomed:
+			zoomed = true
+		if Input.is_action_just_pressed("zoom_out"):
+			zoomed = false
 	
 	if zoomed:
 		camera.fov = lerp(camera.fov, fov/2.5, delta * 15)

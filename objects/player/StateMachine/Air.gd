@@ -15,8 +15,9 @@ func on_physics_process(delta):
 	handle_landing()
 	handle_movement(delta)
 	
-	if Input.is_action_pressed("jump"):
-		handle_mantle()
+	if player.is_multiplayer_authority():
+		if Input.is_action_pressed("jump"):
+			handle_mantle()
 	handle_jump()
 
 # Called when the state machine exits this state.

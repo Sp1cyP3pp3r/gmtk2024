@@ -23,6 +23,7 @@ buses/default_bus_layout="res://sounds/default_bus.tres"
 [autoload]
 
 Shaker="*res://addons/shaker/src/Shaker.gd"
+Director="*res://objects/multiplayer_director.tscn"
 
 [display]
 
@@ -31,6 +32,10 @@ window/size/viewport_height=700
 [editor_plugins]
 
 enabled=PackedStringArray("res://addons/finite_state_machine/plugin.cfg", "res://addons/func_godot/plugin.cfg", "res://addons/project_time_tracker/plugin.cfg", "res://addons/shaker/plugin.cfg")
+
+[global_group]
+
+PlayerSpawners="Group for all the player multiplayer spawners"
 
 [input]
 

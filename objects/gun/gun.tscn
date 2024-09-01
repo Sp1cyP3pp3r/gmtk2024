@@ -1,4 +1,4 @@
-[gd_scene load_steps=33 format=4 uid="uid://cebrbw00uf83n"]
+[gd_scene load_steps=34 format=4 uid="uid://cebrbw00uf83n"]
 
 [ext_resource type="PackedScene" uid="uid://btw3b8g0fag8w" path="res://models/KenneyBlasters/blasterG.glb" id="1_8idwd"]
 [ext_resource type="Script" path="res://objects/gun/gun.gd" id="1_prfgq"]
@@ -17,6 +17,7 @@
 [ext_resource type="Texture2D" uid="uid://dwexrgqk6w8f1" path="res://hud/icon_enlarge.svg" id="9_tvi7b"]
 [ext_resource type="Texture2D" uid="uid://umt63twx0ytj" path="res://hud/ammo_sticky.svg" id="10_sn5f2"]
 [ext_resource type="Texture2D" uid="uid://wjlw5b7schc" path="res://hud/enlarge_border.svg" id="11_oa6wt"]
+[ext_resource type="Texture2D" uid="uid://b5sui44ok8a7m" path="res://hud/crosshairs/crosshair001.png" id="12_cvbb3"]
 [ext_resource type="Texture2D" uid="uid://d2ifkd1etvhyg" path="res://hud/enlarge_ammo.svg" id="12_wajq5"]
 [ext_resource type="Texture2D" uid="uid://doakvxsq5d3lw" path="res://hud/shrink_border.svg" id="13_dwueg"]
 [ext_resource type="Texture2D" uid="uid://bbtl6y6o2a7k5" path="res://hud/shrink_ammo.svg" id="14_lmbea"]
@@ -274,6 +275,7 @@ texture = ExtResource("5_167om")
 [node name="Beam" type="Sprite3D" parent="blasterG2/Gunpoint"]
 transform = Transform3D(0.117032, 0, 0, 0, 0.117032, 0, 0, 0, 0.117032, -0.0714764, 0.0544839, 0.436168)
 layers = 2
+double_sided = false
 texture = ExtResource("9_tvi7b")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
@@ -286,7 +288,6 @@ process_callback = 0
 one_shot = true
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
-visible = false
 
 [node name="CenterContainer" type="CenterContainer" parent="CanvasLayer"]
 anchors_preset = 15
@@ -302,6 +303,11 @@ metadata/_edit_lock_ = true
 [node name="TextureRect" type="TextureRect" parent="CanvasLayer/CenterContainer"]
 layout_mode = 2
 texture = ExtResource("4_lj5xb")
+stretch_mode = 2
+
+[node name="TextureRect2" type="TextureRect" parent="CanvasLayer/CenterContainer"]
+layout_mode = 2
+texture = ExtResource("12_cvbb3")
 stretch_mode = 2
 
 [node name="AspectRatioContainer2" type="AspectRatioContainer" parent="CanvasLayer"]
@@ -328,6 +334,7 @@ texture = ExtResource("5_167om")
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 5.0
+value = 5.0
 texture_progress = ExtResource("5_ytwew")
 
 [node name="VSplitContainer2" type="VSplitContainer" parent="CanvasLayer/AspectRatioContainer2/HBoxContainer"]
@@ -344,6 +351,7 @@ texture = ExtResource("7_kygy6")
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 5.0
+value = 5.0
 texture_progress = ExtResource("8_lgyeh")
 
 [node name="VSplitContainer3" type="VSplitContainer" parent="CanvasLayer/AspectRatioContainer2/HBoxContainer"]
@@ -360,6 +368,7 @@ texture = ExtResource("9_pnsr0")
 unique_name_in_owner = true
 layout_mode = 2
 max_value = 5.0
+value = 5.0
 texture_progress = ExtResource("10_sn5f2")
 
 [node name="AspectRatioContainer3" type="AspectRatioContainer" parent="CanvasLayer"]
@@ -380,6 +389,7 @@ unique_name_in_owner = true
 show_behind_parent = true
 layout_mode = 2
 step = 0.25
+value = 100.0
 texture_over = ExtResource("11_oa6wt")
 texture_progress = ExtResource("12_wajq5")
 texture_progress_offset = Vector2(2, 1)
@@ -389,6 +399,7 @@ unique_name_in_owner = true
 show_behind_parent = true
 layout_mode = 2
 step = 0.01
+value = 100.0
 texture_over = ExtResource("13_dwueg")
 texture_progress = ExtResource("14_lmbea")
 texture_progress_offset = Vector2(2, 1)

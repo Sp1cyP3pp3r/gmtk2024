@@ -1,0 +1,9 @@
+[gd_scene load_steps=3 format=3 uid="uid://dpjo818ltvxn8"]
+
+[ext_resource type="Script" path="res://objects/player/player_spawner.gd" id="1_ddx2w"]
+[ext_resource type="PackedScene" uid="uid://c1n8xrti8afpc" path="res://objects/player/player.tscn" id="2_gqh6b"]
+
+[node name="PlayerSpawner" type="Marker3D" groups=["PlayerSpawners"]]
+gizmo_extents = 0.5
+script = ExtResource("1_ddx2w")
+player_scn = ExtResource("2_gqh6b")

@@ -9,6 +9,7 @@ func on_enter():
 	$AudioStreamPlayer.stream = audio_array[i]
 	$AudioStreamPlayer.play()
 	
+	%AnimationPlayer.play("jump")
 	player.acceleration = 2.5
 	player.velocity.y = player.jump_power * 1.1
 

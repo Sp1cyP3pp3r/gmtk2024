@@ -8,16 +8,19 @@ var snap_margin = 0.01
 var is_player_on_stairs : bool = false
 
 func catch_movement() -> void:
-	if Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_forward") or \
-	Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
-		change_state("Run")
+	if player.is_multiplayer_authority():
+		if Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_forward") or \
+		Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
+			change_state("Run")
 
 func catch_no_movement() -> void:
 	if player.velocity.is_equal_approx(Vector3.ZERO):
 		change_state("Idle")
 
 func handle_movement(delta) -> void:
-	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	var input_dir : Vector2
+	if player.is_multiplayer_authority():
+		input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction = input_dir.rotated(-player.rotation.y)
 	direction = Vector3(direction.x, 0, direction.y)
 	var _dot = direction.dot(-player.global_transform.basis.z)
@@ -71,9 +74,10 @@ func handle_fall(delta) -> void:
 
 
 func handle_jump() -> void:
-	if Input.is_action_just_pressed("jump"):
-		if can_jump():
-			change_state("Jump")
+	if is_multiplayer_authority():
+		if Input.is_action_just_pressed("jump"):
+			if can_jump():
+				change_state("Jump")
 
 func smooth_landing(delta) -> void:
 	if player.velocity.y > 0:
@@ -87,9 +91,10 @@ func can_jump() -> bool:
 	return false
 
 func handle_crouch() -> void:
-	if Input.is_action_just_pressed("crouch"):
-		if can_crouch_in_this_state:
-			change_state("Crouch")
+	if player.is_multiplayer_authority():
+		if Input.is_action_just_pressed("crouch"):
+			if can_crouch_in_this_state:
+				change_state("Crouch")
 
 func tween_camera_crouch() -> void:
 	var _tween := create_tween()
@@ -110,9 +115,10 @@ func tween_camera_uncrouch() -> void:
 	_tween.kill()
 
 func handle_uncrouch() -> void:
-	if Input.is_action_just_pressed("crouch") or Input.is_action_just_pressed("jump"):
-		if player.head.head_free_space():
-			change_state("Run")
+	if player.is_multiplayer_authority():
+		if Input.is_action_just_pressed("crouch") or Input.is_action_just_pressed("jump"):
+			if player.head.head_free_space():
+				change_state("Run")
 
 func handle_mantle() -> void:
 	if not player.is_mantling:
@@ -126,4 +132,5 @@ func handle_mantle() -> void:
 							if player.climb.has_freespace_standing():
 								%Mantle.crouch = false
 							change_state("Mantle")
+							return
 	pass

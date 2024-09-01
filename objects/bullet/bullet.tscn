@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=4 uid="uid://bih76q0b13amv"]
+[gd_scene load_steps=10 format=4 uid="uid://bih76q0b13amv"]
 
 [ext_resource type="PackedScene" uid="uid://bcsrxy7cfqvsc" path="res://models/KenneyBlasters/foamBulletA.glb" id="1_dj68n"]
 [ext_resource type="Script" path="res://objects/bullet/bullet.gd" id="1_kiiik"]
@@ -6,8 +6,7 @@
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x2vvx"]
 rough = true
-bounce = 1.0
-absorbent = true
+bounce = 0.5
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_37d6n"]
 resource_name = "yellow"
@@ -51,6 +50,23 @@ margin = 0.01
 height = 0.819365
 radius = 0.136143
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_bdgis"]
+properties/0/path = NodePath(".:position")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:rotation")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:linear_velocity")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:freeze")
+properties/3/spawn = true
+properties/3/replication_mode = 2
+properties/4/path = NodePath(".:angular_velocity")
+properties/4/spawn = true
+properties/4/replication_mode = 1
+
 [node name="Bullet" type="RigidBody3D"]
 collision_layer = 4
 collision_mask = 16
@@ -72,6 +88,9 @@ mesh = SubResource("ArrayMesh_k7fdk")
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]
 transform = Transform3D(0.999993, 0.00234392, 0.00282196, -0.00281738, -0.001952, 0.999994, 0.00234943, -0.999995, -0.00194537, 0, 0, 0)
 shape = SubResource("CylinderShape3D_xd0oa")
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_bdgis")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 

@@ -8,6 +8,7 @@ func on_enter():
 	tween_camera_crouch()
 	player.speed = 2.5
 	player.acceleration = 50
+	%AnimationPlayer.play("croutch")
 	vinnete_start()
 
 # Called every physics frame when this state is active.
@@ -25,6 +26,7 @@ func on_exit():
 	%StandCollision.disabled = false
 	tween_camera_uncrouch()
 	player.head.head_free_space_cast.target_position.y = 0.45
+	%AnimationPlayer.play("uncroutch")
 	vinnete_end()
 
 func vinnete_start():

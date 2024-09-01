@@ -14,8 +14,10 @@ func on_physics_process(delta):
 	slopes_and_stairs(delta)
 	smooth_landing(delta)
 	
-	if Input.is_action_pressed("jump"):
-		handle_mantle()
+	
+	if player.is_multiplayer_authority():
+		if Input.is_action_pressed("jump"):
+			handle_mantle()
 	
 	handle_jump()
 	handle_crouch()

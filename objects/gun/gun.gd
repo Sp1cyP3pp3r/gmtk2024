@@ -23,6 +23,7 @@ enum BEAM_TYPE {Enlarge, Shrink}
 @onready var hologram: Sprite3D = %Hologram
 @onready var beam_holo: Sprite3D = $blasterG2/Gunpoint/Beam
 @onready var hud: CanvasLayer = $CanvasLayer
+@onready var mesh: MeshInstance3D = $blasterG2/blasterG
 
 
 
@@ -45,28 +46,29 @@ func _physics_process(delta: float) -> void:
 	if visible == false:
 		can_shoot = false
 	
-	if Input.is_action_pressed("box1"):
-		current_ammo = AMMO_TYPE.Normal
-		hologram.texture = preload("res://hud/icon_normal.svg")
-	elif Input.is_action_pressed("box2"):
-		current_ammo = AMMO_TYPE.Floaty
-		hologram.texture = preload("res://hud/icon_floaty.svg")
-	elif Input.is_action_pressed("box3"):
-		current_ammo = AMMO_TYPE.Sticky
-		hologram.texture = preload("res://hud/icon_sticky.svg")
+	if owner.is_multiplayer_authority():
+		if Input.is_action_pressed("box1"):
+			current_ammo = AMMO_TYPE.Normal
+			hologram.texture = preload("res://hud/icon_normal.svg")
+		elif Input.is_action_pressed("box2"):
+			current_ammo = AMMO_TYPE.Floaty
+			hologram.texture = preload("res://hud/icon_floaty.svg")
+		elif Input.is_action_pressed("box3"):
+			current_ammo = AMMO_TYPE.Sticky
+			hologram.texture = preload("res://hud/icon_sticky.svg")
+		
+		if Input.is_action_pressed("beam2"):
+			current_beam = BEAM_TYPE.Enlarge
+			beam_holo.texture = preload("res://hud/icon_enlarge.svg")
+		elif Input.is_action_pressed("beam1"):
+			current_beam = BEAM_TYPE.Shrink
+			beam_holo.texture = preload("res://hud/icon_shrink.svg")
 	
-	if Input.is_action_pressed("beam2"):
-		current_beam = BEAM_TYPE.Enlarge
-		beam_holo.texture = preload("res://hud/icon_enlarge.svg")
-	elif Input.is_action_pressed("beam1"):
-		current_beam = BEAM_TYPE.Shrink
-		beam_holo.texture = preload("res://hud/icon_shrink.svg")
-	
-	if can_shoot:
-		if Input.is_action_pressed("shoot"):
-			fire()
-		if Input.is_action_pressed("beam"):
-			beam()
+		if can_shoot:
+			if Input.is_action_pressed("shoot"):
+				fire()
+			if Input.is_action_pressed("beam"):
+				beam()
 
 func mantle_start():
 	can_shoot = false
@@ -112,7 +114,7 @@ func beam():
 			var server = get_world_3d().direct_space_state
 			var params = PhysicsRayQueryParameters3D.new()
 			params.collision_mask = pow(2, 5-1) + pow(2, 4-1)
-			params.from = gunpoint.global_position
+			params.from =  %Camera.global_position
 			var _to = %Camera.global_position + -%Camera.global_basis.z * 50
 			params.to = _to
 			var ray = server.intersect_ray(params)

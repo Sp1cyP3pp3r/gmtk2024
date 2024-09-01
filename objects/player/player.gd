@@ -16,14 +16,18 @@ class_name Player
 var checkpoint : Vector3
 var is_mantling : bool = false
 
+func _enter_tree() -> void:
+	set_multiplayer_authority(name.to_int())
+
 func _ready() -> void:
 	checkpoint = global_position
-
-#func _physics_process(delta):
-	#if Input.is_key_pressed(KEY_R):
-		#get_tree().reload_current_scene()
-		#
-	#%Label2.text = str($FiniteStateMachine.current_state.name)
+	if is_multiplayer_authority():
+		%Camera.make_current()
+		$BodyMesh.visible = false
+	else:
+		$Head/Camera/SubViewportContainer.visible = false
+		$Head/Camera/Gun/CanvasLayer.visible = false
+		gun.mesh.layers = 1
 
 func death():
 	var array = [Color("80b3ff"), Color("ffb380"), Color("d35f8d")]

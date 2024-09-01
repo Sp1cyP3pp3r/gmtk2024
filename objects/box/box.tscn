@@ -1,4 +1,4 @@
-[gd_scene load_steps=17 format=3 uid="uid://bwk6kmpurm4qq"]
+[gd_scene load_steps=18 format=3 uid="uid://bwk6kmpurm4qq"]
 
 [ext_resource type="Script" path="res://objects/box/box.gd" id="1_l6mwj"]
 [ext_resource type="Texture2D" uid="uid://civkmlnv8c4cp" path="res://textures/floormat.jpg" id="2_spemd"]
@@ -117,10 +117,30 @@ _data = {
 [sub_resource type="AudioStream" id="AudioStream_upf6h"]
 resource_local_to_scene = true
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_3xmrg"]
+properties/0/path = NodePath(".:size")
+properties/0/spawn = true
+properties/0/replication_mode = 1
+properties/1/path = NodePath(".:position")
+properties/1/spawn = true
+properties/1/replication_mode = 1
+properties/2/path = NodePath(".:rotation")
+properties/2/spawn = true
+properties/2/replication_mode = 1
+properties/3/path = NodePath(".:linear_velocity")
+properties/3/spawn = true
+properties/3/replication_mode = 1
+properties/4/path = NodePath(".:freeze")
+properties/4/spawn = true
+properties/4/replication_mode = 2
+properties/5/path = NodePath(".:angular_velocity")
+properties/5/spawn = true
+properties/5/replication_mode = 1
+
 [node name="Box" type="RigidBody3D"]
 collision_layer = 104
 collision_mask = 32
-mass = 15.0
+mass = 3.5
 physics_material_override = SubResource("PhysicsMaterial_qtly5")
 contact_monitor = true
 max_contacts_reported = 1
@@ -143,5 +163,8 @@ libraries = {
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = SubResource("AudioStream_upf6h")
 bus = &"Boxes and Stuff"
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_3xmrg")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]

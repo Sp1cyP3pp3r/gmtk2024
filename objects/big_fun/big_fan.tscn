@@ -1,0 +1,35 @@
+[gd_scene load_steps=5 format=3 uid="uid://blwranghl67fm"]
+
+[ext_resource type="Script" path="res://objects/big_fun/big_fan.gd" id="1_7u3pn"]
+
+[sub_resource type="TorusMesh" id="TorusMesh_g8y0n"]
+inner_radius = 2.5
+outer_radius = 3.0
+
+[sub_resource type="CylinderMesh" id="CylinderMesh_3fqke"]
+top_radius = 0.0
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_hrj72"]
+size = Vector3(5.61133, 13.0761, 5.76471)
+
+[node name="BigFan" type="Area3D"]
+collision_layer = 0
+collision_mask = 8
+gravity_space_override = 3
+gravity = 3.0
+script = ExtResource("1_7u3pn")
+
+[node name="MeshInstance3D" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 4.37114e-08, 1, 1)
+mesh = SubResource("TorusMesh_g8y0n")
+
+[node name="MeshInstance3D2" type="MeshInstance3D" parent="."]
+transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 4.37114e-08, 1, -0.30561)
+mesh = SubResource("CylinderMesh_3fqke")
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="."]
+transform = Transform3D(1.91069e-15, -4.37114e-08, 1, -1, -4.37114e-08, 0, 4.37114e-08, -1, -4.37114e-08, 0.0142516, 1.03418, -5.45951)
+shape = SubResource("BoxShape3D_hrj72")
+
+[connection signal="body_entered" from="." to="." method="add_body"]
+[connection signal="body_exited" from="." to="." method="remove_body"]
