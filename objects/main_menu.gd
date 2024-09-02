@@ -32,8 +32,6 @@ func _on_check_button_toggled(toggled_on: bool) -> void:
 
 func _on_host_pressed() -> void:
 	create_server.emit()
-	multiplayer.peer_connected.connect(Director.add_player, 1)
-	Director.add_player(1)
 	change_scene()
 	
 

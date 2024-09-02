@@ -132,6 +132,12 @@ properties/6/replication_mode = 2
 properties/7/path = NodePath("Head:position")
 properties/7/spawn = true
 properties/7/replication_mode = 2
+properties/8/path = NodePath("StandCollision:disabled")
+properties/8/spawn = true
+properties/8/replication_mode = 2
+properties/9/path = NodePath("CrouchCollision:disabled")
+properties/9/spawn = true
+properties/9/replication_mode = 2
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6bpp3"]
 albedo_texture = ExtResource("21_1tqjx")
@@ -203,34 +209,6 @@ _surfaces = [{
 blend_shape_mode = 0
 shadow_mesh = SubResource("ArrayMesh_hrbcd")
 
-[sub_resource type="Animation" id="Animation_n5iik"]
-resource_name = "jump"
-length = 0.25
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BodyMesh:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.233333),
-"transitions": PackedFloat32Array(1, 0.707107, 2.37841),
-"update": 0,
-"values": [Vector3(0.464355, 0.96443, 0.499768), Vector3(0.464, 0.45, 0.5), Vector3(0.464355, 0.96443, 0.499768)]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BodyMesh:position")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.25),
-"transitions": PackedFloat32Array(1, 3.13834, 1),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 1, 0), Vector3(0, 0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_nhju4"]
 length = 0.001
 tracks/0/type = "value"
@@ -274,6 +252,34 @@ tracks/0/keys = {
 "values": [Vector3(0.464355, 0.96443, 0.499768), Vector3(0.464, 0.27, 0.5)]
 }
 
+[sub_resource type="Animation" id="Animation_n5iik"]
+resource_name = "jump"
+length = 0.25
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyMesh:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.233333),
+"transitions": PackedFloat32Array(1, 0.707107, 2.37841),
+"update": 0,
+"values": [Vector3(0.464355, 0.96443, 0.499768), Vector3(0.464, 0.45, 0.5), Vector3(0.464355, 0.96443, 0.499768)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BodyMesh:position")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.25),
+"transitions": PackedFloat32Array(1, 3.13834, 1),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 1, 0), Vector3(0, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_08dls"]
 resource_name = "uncroutch"
 length = 0.3
@@ -299,7 +305,7 @@ _data = {
 }
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("legs", "head", "climb", "gun")]
-collision_layer = 2
+collision_layer = 67
 collision_mask = 9
 script = ExtResource("1_oa43o")
 legs = NodePath("Legs")
@@ -508,6 +514,18 @@ audio_array = Array[AudioStream]([ExtResource("17_udwbx"), ExtResource("18_qdrno
 
 [node name="CanvasLayer" type="CanvasLayer" parent="."]
 follow_viewport_enabled = true
+
+[node name="Peer" type="Label" parent="CanvasLayer"]
+visible = false
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -125.0
+offset_top = 32.0
+offset_right = -34.0
+offset_bottom = 55.0
+grow_horizontal = 0
+text = "Хост пидор"
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
 unique_name_in_owner = true

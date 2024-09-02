@@ -18,6 +18,9 @@ var is_mantling : bool = false
 
 func _enter_tree() -> void:
 	set_multiplayer_authority(name.to_int())
+	if get_multiplayer_authority() == 1:
+		$CanvasLayer/Peer.visible = true
+		
 
 func _ready() -> void:
 	checkpoint = global_position

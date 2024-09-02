@@ -11,6 +11,14 @@ extends Node3D
 
 @export var stairs_up_margin : float = 0.2
 
+func _ready() -> void:
+	floor_cast.add_exception(owner)
+	floor_ray.add_exception(owner)
+	stairs_cast.add_exception(owner)
+	stairs_floor_ray_cast.add_exception(owner)
+	free_space_ray_cast.add_exception(owner)
+	stairs_beneath.add_exception(owner)
+	stairs_near.add_exception(owner)
 
 func is_on_stairs() -> bool:
 	stairs_cast.force_shapecast_update()

@@ -1,9 +1,13 @@
-[gd_scene load_steps=2 format=3 uid="uid://7me7mikjmcgo"]
+[gd_scene load_steps=5 format=3 uid="uid://7me7mikjmcgo"]
 
 [ext_resource type="Script" path="res://objects/multiplayer_director.gd" id="1_tllbb"]
+[ext_resource type="PackedScene" uid="uid://bwk6kmpurm4qq" path="res://objects/box/box.tscn" id="2_yhe2x"]
+[ext_resource type="PackedScene" uid="uid://cfy6qqmef8ymf" path="res://objects/box/box_floaty.tscn" id="3_v1qby"]
+[ext_resource type="PackedScene" uid="uid://d4qcpciovmrf" path="res://objects/box/box_sticky.tscn" id="4_oa30l"]
 
 [node name="MultiplayerDirector" type="Node"]
 script = ExtResource("1_tllbb")
+spawn_list = Array[PackedScene]([ExtResource("2_yhe2x"), ExtResource("3_v1qby"), ExtResource("4_oa30l")])
 
 [node name="MultiplayerSpawner" type="MultiplayerSpawner" parent="."]
 _spawnable_scenes = PackedStringArray("res://objects/player/player.tscn", "res://objects/box/box.tscn", "res://objects/box/box_floaty.tscn", "res://objects/box/box_sticky.tscn")

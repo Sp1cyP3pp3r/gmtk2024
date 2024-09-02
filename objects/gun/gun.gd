@@ -5,7 +5,7 @@ class_name Gun
 @export var audio_laser_array : Array[AudioStream]
 @export var audio_jam_array : Array[AudioStream]
 
-enum AMMO_TYPE {Normal, Sticky, Floaty}
+#enum AMMO_TYPE {Normal, Sticky, Floaty}
 enum BEAM_TYPE {Enlarge, Shrink}
 
 @export var bullet_scene : PackedScene
@@ -34,7 +34,8 @@ enum BEAM_TYPE {Enlarge, Shrink}
 @export var scale_power : float = 0.05
 @export var scale_value : float = 0.375
 
-var current_ammo : AMMO_TYPE = AMMO_TYPE.Normal
+#var current_ammo : AMMO_TYPE = AMMO_TYPE.Normal
+var current_ammo : BoxType.Type = BoxType.Type.Normal
 var current_beam : BEAM_TYPE = BEAM_TYPE.Enlarge
 var can_shoot : bool = true
 var is_ready : bool = true
@@ -48,13 +49,13 @@ func _physics_process(delta: float) -> void:
 	
 	if owner.is_multiplayer_authority():
 		if Input.is_action_pressed("box1"):
-			current_ammo = AMMO_TYPE.Normal
+			current_ammo = BoxType.Type.Normal
 			hologram.texture = preload("res://hud/icon_normal.svg")
 		elif Input.is_action_pressed("box2"):
-			current_ammo = AMMO_TYPE.Floaty
+			current_ammo = BoxType.Type.Floaty
 			hologram.texture = preload("res://hud/icon_floaty.svg")
 		elif Input.is_action_pressed("box3"):
-			current_ammo = AMMO_TYPE.Sticky
+			current_ammo = BoxType.Type.Sticky
 			hologram.texture = preload("res://hud/icon_sticky.svg")
 		
 		if Input.is_action_pressed("beam2"):
@@ -181,19 +182,20 @@ func fire():
 	if not free_space.is_colliding():
 		if is_ready:
 			match current_ammo:
-				AMMO_TYPE.Normal:
+				#TODO
+				BoxType.Type.Normal:
 					if normal_box_ammo.value <= 0:
 						gun_jam()
 						reloading()
 						return
 					
-				AMMO_TYPE.Floaty:
+				BoxType.Type.Floaty:
 					if floaty_box_ammo.value <= 0:
 						gun_jam()
 						reloading()
 						return
 				
-				AMMO_TYPE.Sticky:
+				BoxType.Type.Sticky:
 					if sticky_box_ammo.value <= 0:
 						gun_jam()
 						reloading()
@@ -210,21 +212,21 @@ func fire():
 			fired_bullet.apply_impulse(-global_basis.z * bullet_speed)
 			
 			match current_ammo:
-				AMMO_TYPE.Normal:
-					fired_bullet.box_scene = preload("res://objects/box/box.tscn")
+				BoxType.Type.Normal:
+					#fired_bullet.box_scene = preload("res://objects/box/box.tscn")
 					fired_bullet.force_speed = 20
 					normal_box_ammo.value -= 1
 					
-				AMMO_TYPE.Floaty:
-					fired_bullet.box_scene = preload("res://objects/box/box_floaty.tscn")
+				BoxType.Type.Floaty:
+					#fired_bullet.box_scene = preload("res://objects/box/box_floaty.tscn")
 					fired_bullet.force_speed = 2.5
 					floaty_box_ammo.value -= 1
 				
-				AMMO_TYPE.Sticky:
-					fired_bullet.box_scene = preload("res://objects/box/box_sticky.tscn")
+				BoxType.Type.Sticky:
+					#fired_bullet.box_scene = preload("res://objects/box/box_sticky.tscn")
 					fired_bullet.force_speed = 3
 					sticky_box_ammo.value -= 1
-			
+			fired_bullet.box_type = current_ammo
 			var size = audio_shoot_array.size()
 			randomize()
 			var i = randi_range(0, size - 1)

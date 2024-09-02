@@ -14,6 +14,7 @@ func _ready():
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
 	camera.fov = fov
 	initial_sens = mouse_sensitivity
+	head_free_space_cast.add_exception(owner)
 
 func _unhandled_input(event):
 	if is_multiplayer_authority():

@@ -160,7 +160,7 @@ properties/5/replication_mode = 1
 
 [node name="BoxSticky" type="RigidBody3D"]
 collision_layer = 8
-collision_mask = 9
+collision_mask = 32
 mass = 5.0
 physics_material_override = SubResource("PhysicsMaterial_qtly5")
 contact_monitor = true

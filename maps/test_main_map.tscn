@@ -1,4 +1,4 @@
-[gd_scene load_steps=71 format=4 uid="uid://dkbwcbx7sqe3n"]
+[gd_scene load_steps=73 format=4 uid="uid://dkbwcbx7sqe3n"]
 
 [ext_resource type="Material" uid="uid://dh6ykun8bv60u" path="res://materials/day_sky.tres" id="1_083do"]
 [ext_resource type="Script" path="res://addons/func_godot/src/map/func_godot_map.gd" id="3_gngig"]
@@ -10,6 +10,7 @@
 [ext_resource type="Material" uid="uid://50nm84hw0lbr" path="res://textures/fluffy.tres" id="10_r5045"]
 [ext_resource type="Script" path="res://objects/player/player_spawner.gd" id="13_8ocav"]
 [ext_resource type="PackedScene" uid="uid://blwranghl67fm" path="res://objects/big_fun/big_fan.tscn" id="13_nwkon"]
+[ext_resource type="PackedScene" uid="uid://durptrrwodtgd" path="res://objects/death_trigger.tscn" id="14_4agf8"]
 [ext_resource type="Material" uid="uid://ddryyi3sux04j" path="res://textures/red_metal.tres" id="16_wde0f"]
 [ext_resource type="Material" uid="uid://t0olcb20jgbn" path="res://textures/red_diamon_metal.tres" id="17_p8gil"]
 [ext_resource type="PackedScene" uid="uid://cv5swai6mwef4" path="res://objects/pick up/pick_up.tscn" id="23_84i13"]
@@ -278,6 +279,9 @@ points = PackedVector3Array(-7.5, 13, 6.5, -7.5, 12, 6.5, -3.5, 12, 6.5, -3.5, 1
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_thagt"]
 points = PackedVector3Array(-3.5, 13, 7.5, -3.5, 12, 7.5, -2.5, 12, 7.5, -2.5, 13, 7.5, -3.5, 13, 11.5, -3.5, 12, 11.5, -2.5, 12, 11.5, -2.5, 13, 11.5)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_gueuj"]
+size = Vector3(80, 1, 80)
+
 [node name="test main map" type="Node3D"]
 
 [node name="WorldEnvironment" type="WorldEnvironment" parent="."]
@@ -521,3 +525,9 @@ script = ExtResource("13_8ocav")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 19.9076, 7.30719, -18.797)
 visible = false
 script = ExtResource("13_8ocav")
+
+[node name="DeathTrigger" parent="." instance=ExtResource("14_4agf8")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -12.091, 0)
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="DeathTrigger"]
+shape = SubResource("BoxShape3D_gueuj")

@@ -258,6 +258,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.081807, -0.493403)
 transform = Transform3D(1, 0, 0, 0, -4.37114e-08, 1, 0, -1, -4.37114e-08, 0, 0, 0)
 shape = SubResource("CylinderShape3D_wfj1i")
 target_position = Vector3(0, 0, 0)
+collision_mask = 16
 
 [node name="Hologram" type="Sprite3D" parent="blasterG2/Gunpoint"]
 unique_name_in_owner = true

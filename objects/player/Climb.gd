@@ -16,6 +16,12 @@ signal update_ledge(point : Vector3)
 
 func _ready() -> void:
 	init_position = position
+	obstacle_detector.add_exception(owner)
+	obstacle_height.add_exception(owner)
+	obstacle_obstr.add_exception(owner)
+	free_space_crouch.add_exception(owner)
+	free_space_standing.add_exception(owner)
+	height_spring_arm.add_excluded_object(owner)
 
 
 func is_wall() -> bool:

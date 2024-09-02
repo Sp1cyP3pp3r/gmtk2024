@@ -1,8 +1,7 @@
-[gd_scene load_steps=10 format=4 uid="uid://bih76q0b13amv"]
+[gd_scene load_steps=9 format=4 uid="uid://bih76q0b13amv"]
 
 [ext_resource type="PackedScene" uid="uid://bcsrxy7cfqvsc" path="res://models/KenneyBlasters/foamBulletA.glb" id="1_dj68n"]
 [ext_resource type="Script" path="res://objects/bullet/bullet.gd" id="1_kiiik"]
-[ext_resource type="PackedScene" uid="uid://bwk6kmpurm4qq" path="res://objects/box/box.tscn" id="2_pguos"]
 
 [sub_resource type="PhysicsMaterial" id="PhysicsMaterial_x2vvx"]
 rough = true
@@ -77,7 +76,6 @@ can_sleep = false
 contact_monitor = true
 max_contacts_reported = 1
 script = ExtResource("1_kiiik")
-box_scene = ExtResource("2_pguos")
 
 [node name="foamBulletA2" parent="." instance=ExtResource("1_dj68n")]
 transform = Transform3D(8.59672, 0, 0, 0, -3.75775e-07, 8.59672, 0, -8.59672, -3.75775e-07, 0, 0, 0)

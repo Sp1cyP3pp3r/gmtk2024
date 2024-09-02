@@ -24,6 +24,7 @@ buses/default_bus_layout="res://sounds/default_bus.tres"
 
 Shaker="*res://addons/shaker/src/Shaker.gd"
 Director="*res://objects/multiplayer_director.tscn"
+BoxType="*res://objects/box/box_type.gd"
 
 [display]
 
