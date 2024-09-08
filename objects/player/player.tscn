@@ -37,14 +37,14 @@ radius = 0.2
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_v0brf"]
 render_priority = 0
 shader = ExtResource("4_pe4gi")
-shader_parameter/outlineColor = Color(0, 0, 0, 0.78)
+shader_parameter/outlineColor = Color(0.906493, 0.906493, 0.906493, 0.78)
 shader_parameter/depth_threshold = 0.025
-shader_parameter/normal_threshold = 0.5
-shader_parameter/normal_smoothing = 0.25
-shader_parameter/max_thickness = 1.3
+shader_parameter/normal_threshold = 0.75
+shader_parameter/normal_smoothing = 0.183
+shader_parameter/max_thickness = 0.5
 shader_parameter/min_thickness = 0.5
-shader_parameter/max_distance = 75.0
-shader_parameter/min_distance = 2.0
+shader_parameter/max_distance = 150.0
+shader_parameter/min_distance = 1.0
 shader_parameter/grazing_fresnel_power = 5.0
 shader_parameter/grazing_angle_mask_power = 1.0
 shader_parameter/grazing_angle_modulation_factor = 50.0
@@ -73,7 +73,7 @@ func update_size():
 "
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_ckefi"]
-size = Vector3(0.4, 1.6, 0.3)
+size = Vector3(0.4, 1.25, 0.3)
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_eue55"]
 radius = 0.25
@@ -329,6 +329,7 @@ disabled = true
 [node name="Head" type="Node3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 script = ExtResource("3_kj3jh")
+fov = 90.0
 
 [node name="HeadFreeSpaceCast" type="ShapeCast3D" parent="Head"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.250672, 0)
@@ -392,8 +393,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
 script = ExtResource("4_2ehjw")
 
 [node name="ObstacleHeight" type="RayCast3D" parent="Climb"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.851986, -0.365159)
-target_position = Vector3(0, -2, 0)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.312405, -0.365159)
+target_position = Vector3(0, -1.35, 0)
 collision_mask = 64
 hit_back_faces = false
 debug_shape_custom_color = Color(0.271951, 0.866286, 1, 1)
@@ -405,7 +406,7 @@ collision_mask = 65
 debug_shape_custom_color = Color(0.271951, 0.866286, 1, 1)
 
 [node name="ObstacleDetector" type="ShapeCast3D" parent="Climb"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.162644, -0.248098)
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.333946, -0.248098)
 shape = SubResource("BoxShape3D_ckefi")
 target_position = Vector3(0, 0, -0.25)
 collision_mask = 65
@@ -489,7 +490,7 @@ can_jump_in_this_state = false
 
 [node name="CoyoteTimer" type="Timer" parent="FiniteStateMachine/Air"]
 process_callback = 0
-wait_time = 0.3
+wait_time = 0.2
 one_shot = true
 
 [node name="Jump" type="Node" parent="FiniteStateMachine"]
@@ -525,7 +526,7 @@ offset_top = 32.0
 offset_right = -34.0
 offset_bottom = 55.0
 grow_horizontal = 0
-text = "Хост пидор"
+text = "Хост лох"
 
 [node name="Label2" type="Label" parent="CanvasLayer"]
 unique_name_in_owner = true

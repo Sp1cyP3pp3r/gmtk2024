@@ -106,6 +106,7 @@ func beam():
 			shooted.emit()
 			anim.play("shoot")
 			
+			#TODO
 			var size = audio_laser_array.size()
 			randomize()
 			var i = randi_range(0, size - 1)
@@ -120,19 +121,19 @@ func beam():
 			params.to = _to
 			var ray = server.intersect_ray(params)
 			var color : Color = Color.DARK_SLATE_GRAY
+			
+			
+			
 			if not ray.is_empty():
 				_to = ray.position
 				if ray.collider is Box:
 					var box = ray.collider as Box
-					
-					var face : Basis = box.global_basis.orthonormalized()
 					var normal = ray.normal
+					var face : Basis = box.global_basis.orthonormalized()
 					var direction : Vector3 = normal * face # actual face
-					var value = abs(direction)
-					var final_value = value * scale_power
-					
 					var offset = normal * scale_power / 2
 					
+					#TODO
 					if abs(direction).is_equal_approx(Vector3.RIGHT):
 						if box.size.x >= box.max_size:
 							offset = Vector3.ZERO
@@ -148,26 +149,23 @@ func beam():
 							offset = Vector3.ZERO
 						elif box.size.y <= box.min_size:
 							offset = Vector3.ZERO
-					
+							
+					Director.change_box_size.rpc(box.get_path(), normal, face, direction, offset, scale_power, current_beam)
 					
 					match current_beam:
 						BEAM_TYPE.Enlarge:
-							box.size += final_value
-							box.global_position += offset
-							color = Color("d34949")
 							if not offset.is_equal_approx(Vector3.ZERO):
 								enlarge_bar.value -= scale_value
 								shrink_bar.value += scale_value / 2
+								color = Color("d34949")
 							else:
 								color = Color("b63e32")
 							
 						BEAM_TYPE.Shrink:
-							box.size -= final_value
-							box.global_position -= offset
-							color = Color("5f66d3")
 							if not offset.is_equal_approx(Vector3.ZERO):
 								shrink_bar.value -= scale_value
 								enlarge_bar.value += scale_value / 2
+								color = Color("5f66d3")
 							else:
 								color = Color("4148b3")
 							
@@ -251,7 +249,7 @@ func reload() -> void:
 	#reloaded.emit(self)
 
 
-
+#
 func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, persist_ms = 0):
 	var mesh_instance := MeshInstance3D.new()
 	var immediate_mesh := ImmediateMesh.new()
@@ -280,5 +278,6 @@ func line(pos1: Vector3, pos2: Vector3, color = Color.WHITE_SMOKE, persist_ms = 
 	
 func final_cleanup(mesh_instance: MeshInstance3D, persist_ms: float):
 	get_tree().get_root().add_child(mesh_instance)
+	mesh_instance.layers = 2 #pow(2, 2-1)
 	await get_tree().create_timer(persist_ms).timeout
 	mesh_instance.queue_free()

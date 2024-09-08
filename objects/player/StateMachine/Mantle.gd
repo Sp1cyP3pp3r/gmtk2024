@@ -10,6 +10,7 @@ signal gun_up
 
 
 func on_enter():
+	player.velocity = Vector3.ZERO
 	player.is_mantling = true
 	if mantle_point != Vector3.ZERO:
 		var size = audio_array.size()

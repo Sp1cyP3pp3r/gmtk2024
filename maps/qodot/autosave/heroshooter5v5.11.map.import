@@ -1,0 +1,14 @@
+[remap]
+
+importer="func_godot.map"
+type="Resource"
+uid="uid://18phslwu1uia"
+path="res://.godot/imported/heroshooter5v5.11.map-b89d233df728fe7dc28a8227bb8c7141.tres"
+
+[deps]
+
+source_file="res://maps/qodot/autosave/heroshooter5v5.11.map"
+dest_files=["res://.godot/imported/heroshooter5v5.11.map-b89d233df728fe7dc28a8227bb8c7141.tres"]
+
+[params]
+

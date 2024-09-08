@@ -28,40 +28,74 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = SubResource("GradientTexture2D_yxc71")
 
-[node name="HBoxContainer" type="HBoxContainer" parent="."]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
 anchor_top = 0.5
 anchor_right = 0.5
 anchor_bottom = 0.5
-offset_left = -54.0
-offset_top = -15.5
-offset_right = 54.0
-offset_bottom = 15.5
+offset_left = -142.0
+offset_top = -33.0
+offset_right = 142.0
+offset_bottom = 33.0
 grow_horizontal = 2
 grow_vertical = 2
+theme_override_constants/separation = 7
+
+[node name="HBoxContainer" type="HBoxContainer" parent="VBoxContainer"]
+layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
 theme_override_constants/separation = 20
 
-[node name="Start" type="Button" parent="HBoxContainer"]
+[node name="Start" type="Button" parent="VBoxContainer/HBoxContainer"]
+visible = false
 layout_mode = 2
 text = "Start
 "
 
-[node name="Host" type="Button" parent="HBoxContainer"]
+[node name="Host" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Host
 "
 
-[node name="Join" type="Button" parent="HBoxContainer"]
+[node name="Join" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Join"
 
-[node name="Quit" type="Button" parent="HBoxContainer"]
+[node name="Quit" type="Button" parent="VBoxContainer/HBoxContainer"]
 layout_mode = 2
 text = "Quit"
+
+[node name="HSplitContainer" type="HSplitContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="HBoxContainer2" type="HBoxContainer" parent="VBoxContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelIP" type="Label" parent="VBoxContainer/HSplitContainer/HBoxContainer2"]
+layout_mode = 2
+text = "IP"
+
+[node name="IPEdit" type="LineEdit" parent="VBoxContainer/HSplitContainer/HBoxContainer2"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "127.0.0.1"
+
+[node name="HBoxContainer3" type="HBoxContainer" parent="VBoxContainer/HSplitContainer"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="LabelPort" type="Label" parent="VBoxContainer/HSplitContainer/HBoxContainer3"]
+layout_mode = 2
+text = "Port"
+
+[node name="PortEdit" type="LineEdit" parent="VBoxContainer/HSplitContainer/HBoxContainer3"]
+layout_mode = 2
+size_flags_horizontal = 3
+placeholder_text = "5357"
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -94,7 +128,6 @@ grow_vertical = 2
 text = "Fullscreen"
 
 [node name="Label" type="Label" parent="."]
-visible = false
 layout_mode = 1
 anchors_preset = 7
 anchor_left = 0.5
@@ -107,17 +140,16 @@ offset_right = 321.0
 offset_bottom = -48.0
 grow_horizontal = 2
 grow_vertical = 0
-text = "This game is made for GMTK 2024 game jam under 96 hours. No matter what, we persist.
-
-Thanks Nekita 'Dikoshi' for soundtrack and encourgment.
-Thanks Mark for sound design and endorsment.
-Thanks Anya, Vika, Kolya for emotial support and being good friends."
+text = "This is multiplayer build of Box: The Power of Scaling. You'll need to establish LAN connection or use VPN to create virtual local network.
+This build is not inteded for public. If you didn't get the game directly from the developer, you may experience security issues."
 horizontal_alignment = 1
 vertical_alignment = 1
 autowrap_mode = 3
 
-[connection signal="pressed" from="HBoxContainer/Start" to="." method="_on_start_pressed"]
-[connection signal="pressed" from="HBoxContainer/Host" to="." method="_on_host_pressed"]
-[connection signal="pressed" from="HBoxContainer/Join" to="." method="_on_join_pressed"]
-[connection signal="pressed" from="HBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Start" to="." method="_on_start_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Host" to="." method="_on_host_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Join" to="." method="_on_join_pressed"]
+[connection signal="pressed" from="VBoxContainer/HBoxContainer/Quit" to="." method="_on_quit_pressed"]
+[connection signal="text_submitted" from="VBoxContainer/HSplitContainer/HBoxContainer2/IPEdit" to="." method="_on_ip_edit_text_submitted"]
+[connection signal="text_submitted" from="VBoxContainer/HSplitContainer/HBoxContainer3/PortEdit" to="." method="_on_port_edit_text_submitted"]
 [connection signal="toggled" from="CheckButton" to="." method="_on_check_button_toggled"]

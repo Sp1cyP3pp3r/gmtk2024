@@ -39,3 +39,11 @@ func _on_host_pressed() -> void:
 func _on_join_pressed() -> void:
 	create_client.emit()
 	change_scene()
+
+
+func _on_ip_edit_text_submitted(new_text: String) -> void:
+	Director.Adress = new_text
+
+
+func _on_port_edit_text_submitted(new_text: String) -> void:
+	Director.Port = new_text.to_int()

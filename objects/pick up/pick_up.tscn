@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://cv5swai6mwef4"]
+[gd_scene load_steps=17 format=3 uid="uid://cv5swai6mwef4"]
 
 [ext_resource type="Script" path="res://objects/pick up/pick_up.gd" id="1_56utb"]
 [ext_resource type="AudioStream" uid="uid://dogx3gt4nlf67" path="res://sounds/pick.wav" id="2_teoqi"]
@@ -141,6 +141,17 @@ _data = {
 "disappear": SubResource("Animation_v8xr5")
 }
 
+[sub_resource type="SceneReplicationConfig" id="SceneReplicationConfig_01ics"]
+properties/0/path = NodePath("CollisionShape3D:disabled")
+properties/0/spawn = true
+properties/0/replication_mode = 2
+properties/1/path = NodePath("Sprite3D:visible")
+properties/1/spawn = true
+properties/1/replication_mode = 2
+properties/2/path = NodePath("GPUParticles3D:emitting")
+properties/2/spawn = true
+properties/2/replication_mode = 2
+
 [node name="PickUp" type="Area3D"]
 collision_layer = 0
 collision_mask = 2
@@ -174,6 +185,9 @@ libraries = {
 [node name="AudioStreamPlayer3D" type="AudioStreamPlayer3D" parent="."]
 stream = ExtResource("2_teoqi")
 volume_db = -30.0
+
+[node name="MultiplayerSynchronizer" type="MultiplayerSynchronizer" parent="."]
+replication_config = SubResource("SceneReplicationConfig_01ics")
 
 [connection signal="body_entered" from="." to="." method="_on_body_entered"]
 [connection signal="timeout" from="Timer" to="." method="_on_timer_timeout"]

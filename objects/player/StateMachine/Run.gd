@@ -1,7 +1,7 @@
 extends PlayerState
 
 func on_enter():
-	player.speed = 6
+	player.speed = 6.563
 	player.acceleration = 30
 
 func on_physics_process(delta):

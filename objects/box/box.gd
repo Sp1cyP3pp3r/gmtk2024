@@ -45,8 +45,8 @@ func _physics_process(delta: float) -> void:
 
 func _on_body_entered(body: Node) -> void:
 	if not audio_array.is_empty():
-		var size = audio_array.size()
+		var _size = audio_array.size()
 		randomize()
-		var i = randi_range(0, size - 1)
+		var i = randi_range(0, _size - 1)
 		audio.stream = audio_array[i]
 		audio.play()
