@@ -7,7 +7,7 @@
 [ext_resource type="Resource" uid="uid://dg5x44cc7flew" path="res://addons/func_godot/fgd/func_illusionary.tres" id="4_c4ucw"]
 [ext_resource type="Resource" uid="uid://ch3e0dix85uhb" path="res://addons/func_godot/fgd/func_detail_illusionary.tres" id="5_b2q3p"]
 [ext_resource type="Script" path="res://addons/func_godot/src/fgd/func_godot_fgd_solid_class.gd" id="6_wgn8t"]
-[ext_resource type="PackedScene" uid="uid://c1n8xrti8afpc" path="res://objects/player/player.tscn" id="7_ndiw8"]
+[ext_resource type="PackedScene" uid="uid://c1n8xrti8afpc" path="res://objects/character parkour/player.tscn" id="7_ndiw8"]
 [ext_resource type="Script" path="res://addons/func_godot/src/fgd/func_godot_fgd_point_class.gd" id="8_bp77i"]
 [ext_resource type="PackedScene" uid="uid://cv5swai6mwef4" path="res://objects/pick up/pick_up.tscn" id="9_oddgn"]
 [ext_resource type="PackedScene" uid="uid://dyw4v3yqgtgsi" path="res://objects/pick up/pick_up_gun.tscn" id="10_he30h"]

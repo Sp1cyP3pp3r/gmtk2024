@@ -111,8 +111,8 @@ tracks/2/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_376yb"]
 _data = {
-"RESET": SubResource("Animation_wu5f4"),
-"appear": SubResource("Animation_dtyxx")
+&"RESET": SubResource("Animation_wu5f4"),
+&"appear": SubResource("Animation_dtyxx")
 }
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_reqmu"]
@@ -162,7 +162,7 @@ mesh = SubResource("BoxMesh_dugb5")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_376yb")
+&"": SubResource("AnimationLibrary_376yb")
 }
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="."]

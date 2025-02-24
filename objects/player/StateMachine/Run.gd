@@ -1,4 +1,4 @@
-extends PlayerState
+extends PlayerStateOld
 
 func on_enter():
 	player.speed = 6.563

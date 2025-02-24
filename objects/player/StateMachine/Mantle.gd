@@ -1,4 +1,4 @@
-extends PlayerState
+extends PlayerStateOld
 
 @export var audio_array : Array[AudioStream]
 

@@ -1,0 +1,166 @@
+[gd_scene load_steps=21 format=3 uid="uid://c1n8xrti8afpc"]
+
+[ext_resource type="Script" path="res://Characters/player.gd" id="1_oa43o"]
+[ext_resource type="Script" path="res://addons/finite_state_machine/scripts/finite_state_machine.gd" id="2_p4q1k"]
+[ext_resource type="Script" path="res://Characters/head.gd" id="3_kj3jh"]
+[ext_resource type="Script" path="res://Characters/legs.gd" id="3_sof65"]
+[ext_resource type="Script" path="res://Characters/StateMachine/Idle.gd" id="5_6pvtv"]
+[ext_resource type="Script" path="res://Characters/StateMachine/Run.gd" id="6_q5vx6"]
+[ext_resource type="Script" path="res://addons/post_processing/node/post_process.gd" id="7_ntk6x"]
+[ext_resource type="Script" path="res://Characters/StateMachine/Air.gd" id="7_q0tn7"]
+[ext_resource type="Resource" uid="uid://bqgmj3h5w62hd" path="res://postpros.tres" id="8_67wo0"]
+
+[sub_resource type="Gradient" id="Gradient_5ns4l"]
+
+[sub_resource type="FastNoiseLite" id="FastNoiseLite_to7b4"]
+
+[sub_resource type="NoiseTexture2D" id="NoiseTexture2D_5s5vr"]
+color_ramp = SubResource("Gradient_5ns4l")
+noise = SubResource("FastNoiseLite_to7b4")
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kp17n"]
+albedo_color = Color(0, 0.889935, 0.995942, 1)
+metallic_specular = 0.0
+roughness_texture = SubResource("NoiseTexture2D_5s5vr")
+clearcoat_enabled = true
+clearcoat = 0.35
+clearcoat_roughness = 0.2
+clearcoat_texture = SubResource("NoiseTexture2D_5s5vr")
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_tvs1n"]
+material = SubResource("StandardMaterial3D_kp17n")
+radius = 0.25
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_oyfeb"]
+radius = 0.25
+height = 1.9
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_rdl2t"]
+
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5qlqq"]
+radius = 0.248
+height = 0.5
+
+[sub_resource type="CylinderShape3D" id="CylinderShape3D_u3y0t"]
+height = 0.5
+radius = 0.35
+
+[sub_resource type="LabelSettings" id="LabelSettings_mm6q2"]
+font_size = 34
+outline_size = 3
+outline_color = Color(0, 0, 0, 1)
+
+[sub_resource type="LabelSettings" id="LabelSettings_f0lxb"]
+font_size = 29
+outline_size = 5
+outline_color = Color(0.0962047, 0.0962048, 0.0962047, 1)
+
+[node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("legs", "head")]
+collision_layer = 2
+script = ExtResource("1_oa43o")
+speed = 8.0
+acceleration = 30.0
+gravity = 15.0
+legs = NodePath("Legs")
+head = NodePath("Head")
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+mesh = SubResource("CapsuleMesh_tvs1n")
+
+[node name="Collision" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+shape = SubResource("CapsuleShape3D_oyfeb")
+
+[node name="Head" type="Node3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1.5, 0)
+script = ExtResource("3_kj3jh")
+
+[node name="Camera" type="Camera3D" parent="Head"]
+
+[node name="ShapeCast3D" type="ShapeCast3D" parent="Head"]
+shape = SubResource("CylinderShape3D_rdl2t")
+target_position = Vector3(0, 0, 0)
+
+[node name="Legs" type="Node3D" parent="."]
+script = ExtResource("3_sof65")
+
+[node name="FloorCast" type="ShapeCast3D" parent="Legs"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.301, 0)
+enabled = false
+shape = SubResource("CapsuleShape3D_5qlqq")
+target_position = Vector3(0, -0.68, 0)
+
+[node name="FloorRay" type="RayCast3D" parent="Legs/FloorCast"]
+enabled = false
+target_position = Vector3(0, -0.95, 0)
+
+[node name="StairsCast" type="ShapeCast3D" parent="Legs"]
+transform = Transform3D(0.999996, 0, -0.00274016, 0, 1, 0, 0.00274016, 0, 0.999996, 0, 0.281829, 0)
+enabled = false
+shape = SubResource("CylinderShape3D_u3y0t")
+target_position = Vector3(0, 0, 0)
+
+[node name="StairsBeneath" type="ShapeCast3D" parent="Legs/StairsCast"]
+enabled = false
+shape = SubResource("CylinderShape3D_u3y0t")
+target_position = Vector3(0, -0.5, 0)
+
+[node name="FreeSpaceRayCast" type="RayCast3D" parent="Legs/StairsCast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+enabled = false
+target_position = Vector3(0, 0, -0.75)
+
+[node name="StairsFloorRayCast" type="RayCast3D" parent="Legs/StairsCast"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.3, 0)
+enabled = false
+target_position = Vector3(0, -0.55, 0)
+
+[node name="FiniteStateMachine" type="Node" parent="." node_paths=PackedStringArray("current_state")]
+script = ExtResource("2_p4q1k")
+current_state = NodePath("Idle")
+
+[node name="Idle" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("5_6pvtv")
+
+[node name="Run" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("6_q5vx6")
+
+[node name="Air" type="Node" parent="FiniteStateMachine"]
+script = ExtResource("7_q0tn7")
+
+[node name="CanvasLayer" type="CanvasLayer" parent="."]
+follow_viewport_enabled = true
+
+[node name="PostProcess" type="CanvasLayer" parent="CanvasLayer"]
+script = ExtResource("7_ntk6x")
+configuration = ExtResource("8_67wo0")
+dynamically_update = false
+
+[node name="ColorRect" type="ColorRect" parent="CanvasLayer"]
+visible = false
+offset_left = 882.0
+offset_top = 45.0
+offset_right = 1130.0
+offset_bottom = 132.0
+
+[node name="Label2" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+offset_left = 77.0
+offset_top = 505.0
+offset_right = 216.0
+offset_bottom = 575.0
+text = "NTRCN TRNMCG"
+label_settings = SubResource("LabelSettings_mm6q2")
+horizontal_alignment = 2
+
+[node name="Label3" type="Label" parent="CanvasLayer"]
+unique_name_in_owner = true
+light_mask = 0
+offset_left = 586.0
+offset_top = 51.0
+offset_right = 1117.0
+offset_bottom = 121.0
+text = "NTRCN TRNMCG"
+label_settings = SubResource("LabelSettings_f0lxb")
+horizontal_alignment = 2

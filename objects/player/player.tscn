@@ -252,6 +252,22 @@ tracks/0/keys = {
 "values": [Vector3(0.464355, 0.96443, 0.499768), Vector3(0.464, 0.27, 0.5)]
 }
 
+[sub_resource type="Animation" id="Animation_08dls"]
+resource_name = "uncroutch"
+length = 0.3
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("BodyMesh:scale")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.3),
+"transitions": PackedFloat32Array(5.46416, 1),
+"update": 0,
+"values": [Vector3(0.464, 0.27, 0.5), Vector3(0.464355, 0.96443, 0.499768)]
+}
+
 [sub_resource type="Animation" id="Animation_n5iik"]
 resource_name = "jump"
 length = 0.25
@@ -280,28 +296,12 @@ tracks/1/keys = {
 "values": [Vector3(0, 0, 0), Vector3(0, 1, 0), Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_08dls"]
-resource_name = "uncroutch"
-length = 0.3
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("BodyMesh:scale")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.3),
-"transitions": PackedFloat32Array(5.46416, 1),
-"update": 0,
-"values": [Vector3(0.464, 0.27, 0.5), Vector3(0.464355, 0.96443, 0.499768)]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_j4dou"]
 _data = {
-"RESET": SubResource("Animation_nhju4"),
-"croutch": SubResource("Animation_f00a8"),
-"jump": SubResource("Animation_n5iik"),
-"uncroutch": SubResource("Animation_08dls")
+&"RESET": SubResource("Animation_nhju4"),
+&"croutch": SubResource("Animation_f00a8"),
+&"jump": SubResource("Animation_n5iik"),
+&"uncroutch": SubResource("Animation_08dls")
 }
 
 [node name="Player" type="CharacterBody3D" node_paths=PackedStringArray("legs", "head", "climb", "gun")]
@@ -581,7 +581,7 @@ skeleton = NodePath("")
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 unique_name_in_owner = true
 libraries = {
-"": SubResource("AnimationLibrary_j4dou")
+&"": SubResource("AnimationLibrary_j4dou")
 }
 
 [connection signal="shooted" from="Head/Camera/Gun" to="Head/Camera/ShakerComponent3D" method="play_shake"]

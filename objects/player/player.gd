@@ -1,5 +1,5 @@
 extends CharacterBody3D
-class_name Player
+class_name PlayerOld
 
 @export var legs : Node3D
 @export var head : Node3D

@@ -1,32 +1,31 @@
 extends StateMachineState
-class_name PlayerStateOld
+class_name PlayerState
 
 @onready var player = get_owner() as Player
 @export var can_jump_in_this_state : bool = true
 @export var can_crouch_in_this_state : bool = true
 var snap_margin = 0.01
+var accel_curve : Curve = preload("res://objects/character parkour/run_curve.tres")
 var is_player_on_stairs : bool = false
 
 func catch_movement() -> void:
-	if player.is_multiplayer_authority():
-		if Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_forward") or \
-		Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
-			change_state("Run")
+	if Input.is_action_pressed("move_backward") or Input.is_action_pressed("move_forward") or \
+	Input.is_action_pressed("move_left") or Input.is_action_pressed("move_right"):
+		change_state("Run")
 
 func catch_no_movement() -> void:
 	if player.velocity.is_equal_approx(Vector3.ZERO):
 		change_state("Idle")
 
 func handle_movement(delta) -> void:
-	var input_dir : Vector2
-	if player.is_multiplayer_authority():
-		input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
+	var input_dir = Input.get_vector("move_left", "move_right", "move_forward", "move_backward")
 	var direction = input_dir.rotated(-player.rotation.y)
 	direction = Vector3(direction.x, 0, direction.y)
 	var _dot = direction.dot(-player.global_transform.basis.z)
-	var _dot_p = _dot * 0.25 + 1 #0.75
-	_dot_p = clamp(_dot_p, 0, 1)
-	var total_speed = player.speed
+	var _dot_p = _dot * 0.25 + 0.75
+	
+	var additional_speed = player.speed * accel_curve.sample(player.add_speed_ratio) / 2 * 1.2
+	var total_speed = player.speed + additional_speed
 	player.velocity.x = lerp(player.velocity.x, direction.x * total_speed * _dot_p, player.acceleration * delta)
 	player.velocity.z = lerp(player.velocity.z, direction.z * total_speed * _dot_p, player.acceleration * delta)
 	if direction.is_equal_approx(Vector3.ZERO) and state_machine.current_state.name == "Run":
@@ -74,10 +73,9 @@ func handle_fall(delta) -> void:
 
 
 func handle_jump() -> void:
-	if is_multiplayer_authority():
-		if Input.is_action_just_pressed("jump"):
-			if can_jump():
-				change_state("Jump")
+	if Input.is_action_just_pressed("jump"):
+		if can_jump():
+			change_state("Jump")
 
 func smooth_landing(delta) -> void:
 	if player.velocity.y > 0:
@@ -91,9 +89,11 @@ func can_jump() -> bool:
 	return false
 
 func handle_crouch() -> void:
-	if player.is_multiplayer_authority():
-		if Input.is_action_just_pressed("crouch"):
-			if can_crouch_in_this_state:
+	if Input.is_action_just_pressed("crouch"):
+		if can_crouch_in_this_state:
+			if player.add_speed_ratio >= 0.15:
+				change_state("Slide")
+			else:
 				change_state("Crouch")
 
 func tween_camera_crouch() -> void:
@@ -115,22 +115,30 @@ func tween_camera_uncrouch() -> void:
 	_tween.kill()
 
 func handle_uncrouch() -> void:
-	if player.is_multiplayer_authority():
-		if Input.is_action_just_pressed("crouch") or Input.is_action_just_pressed("jump"):
-			if player.head.head_free_space():
-				change_state("Run")
+	if Input.is_action_just_pressed("uncrouch"):
+		if player.head.head_free_space():
+			change_state("Run")
 
-func handle_mantle() -> void:
-	if not player.is_mantling:
-		if player.velocity.y >= -20:
-			if player.climb.is_obstacle() and not player.climb.is_wall():
-				var _height =  player.climb.get_obstacle_height()
-				if _height >= 0.55 and _height <= 1.8:
-					if player.climb.has_free_way():
-						if player.climb.has_freespace_crouching():
-							%Mantle.crouch = true
-							if player.climb.has_freespace_standing():
-								%Mantle.crouch = false
-							change_state("Mantle")
-							return
-	pass
+func handle_ledgegrab() -> void:
+	if player.velocity.y >= -200:
+		if player.climb.is_obstacle():
+			if player.climb.can_grab_ledge():
+				if player.climb.get_obstacle_height() >= 2.2 and\
+				player.climb.get_obstacle_height() <= 3:
+					player.climb.can_mantle()
+					change_state("LedgeGrab")
+				elif player.climb.get_obstacle_height() >= 1 and\
+				player.climb.get_obstacle_height() <= 2.19:
+					if player.climb.can_mantle():
+						change_state("Mantle")
+
+func handle_quickturn() -> void:
+	if Input.is_action_just_pressed("quick_turn"):
+		var tween = create_tween()
+		var _to = player.rotation.y - PI
+		var time = 0.25
+		tween.tween_property(player, "rotation:y", _to, time)
+		tween.play()
+		await  tween.finished
+		tween.kill()
+	

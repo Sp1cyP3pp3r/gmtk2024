@@ -123,6 +123,22 @@ tracks/1/keys = {
 "values": [Vector3(0, 0, 0)]
 }
 
+[sub_resource type="Animation" id="Animation_168rh"]
+resource_name = "shoot"
+length = 0.1
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("blasterG2:position")
+tracks/0/interp = 2
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 0.0333333, 0.1),
+"transitions": PackedFloat32Array(0.00497876, 2.73208, 0.840896),
+"update": 0,
+"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.05), Vector3(0, 0, 0)]
+}
+
 [sub_resource type="Animation" id="Animation_ca0u0"]
 resource_name = "bring_down"
 length = 0.25
@@ -181,22 +197,6 @@ tracks/1/keys = {
 "values": [Vector3(-0.349066, 0.349066, 0), Vector3(0, 0, 0)]
 }
 
-[sub_resource type="Animation" id="Animation_168rh"]
-resource_name = "shoot"
-length = 0.1
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("blasterG2:position")
-tracks/0/interp = 2
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0, 0.0333333, 0.1),
-"transitions": PackedFloat32Array(0.00497876, 2.73208, 0.840896),
-"update": 0,
-"values": [Vector3(0, 0, 0), Vector3(0, 0, 0.05), Vector3(0, 0, 0)]
-}
-
 [sub_resource type="Animation" id="Animation_4i0wp"]
 resource_name = "yoink"
 length = 0.4
@@ -227,11 +227,11 @@ tracks/1/keys = {
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_eva0s"]
 _data = {
-"RESET": SubResource("Animation_4tip8"),
-"bring_down": SubResource("Animation_ca0u0"),
-"bring_up": SubResource("Animation_l4ydx"),
-"shoot": SubResource("Animation_168rh"),
-"yoink": SubResource("Animation_4i0wp")
+&"RESET": SubResource("Animation_4tip8"),
+&"bring_down": SubResource("Animation_ca0u0"),
+&"bring_up": SubResource("Animation_l4ydx"),
+&"shoot": SubResource("Animation_168rh"),
+&"yoink": SubResource("Animation_4i0wp")
 }
 
 [node name="Gun" type="Node3D"]
@@ -282,7 +282,7 @@ texture = ExtResource("9_tvi7b")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {
-"": SubResource("AnimationLibrary_eva0s")
+&"": SubResource("AnimationLibrary_eva0s")
 }
 
 [node name="Timer" type="Timer" parent="."]
